@@ -1,0 +1,39 @@
+server:
+  port: 10010
+spring:
+  application:
+    name: ly-api-gateway
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:10086/eureka/
+    #每多少秒获取服务列表
+    registry-fetch-interval-seconds: 5
+  instance:
+    instance-id: ${spring.application.name}:${server.port}
+    #默认以ip优先  而不是主机名
+    prefer-ip-address: true
+    ip-address: 127.0.0.1
+
+
+#熔断   在zuul中最好在后置拦截器里定义超时处理 返回一个页面  用户友好
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 10000 #将超时时间设置为10s 原本为 1s
+
+#负载均衡重试
+ribbon:
+  ConnectTimeout: 250 #连接超时
+  ReadTimeout: 2000 #通信超时
+  OkToRetryOnAllOperations: true # 是否对所有请求都进行重试
+  MaxAutoRetriesNextServer: 1   #重试切换实例次数 不要太大防止响应太慢
+  MaxAutoRetries: 1     #对当前实例的重试次数
+
+zuul:
+  prefix: /api #添加路由前缀
+  retryable: true
