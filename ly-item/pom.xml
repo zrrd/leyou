@@ -4,14 +4,18 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-
-  <groupId>com.leyou.common</groupId>
-  <artifactId>ly-registry</artifactId>
+  <groupId>com.leyou.service</groupId>
+  <artifactId>ly-item</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <packaging>jar</packaging>
+  <modules>
 
-  <name>ly-registry</name>
-  <description>乐优商场注册中心</description>
+    <module>ly-item-service</module>
+    <module>ly-item-interface</module>
+  </modules>
+  <packaging>pom</packaging>
+
+  <name>ly-item</name>
+  <description>乐优商场商品</description>
 
   <parent>
     <artifactId>leyou</artifactId>
@@ -22,19 +26,23 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.springframework.cloud</groupId>
-      <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter</artifactId>
     </dependency>
 
-    <dependency>
-      <groupId>org.projectlombok</groupId>
-      <artifactId>lombok</artifactId>
-      <optional>true</optional>
-    </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.baomidou</groupId>
+      <artifactId>mybatis-plus-boot-starter</artifactId>
+      <version>3.0.6</version>
     </dependency>
   </dependencies>
 
