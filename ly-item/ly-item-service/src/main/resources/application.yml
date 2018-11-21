@@ -1,0 +1,22 @@
+server:
+  port: 8081
+spring:
+  datasource:
+    url: jdbc:mysql://47.99.73.15:3306/games?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    username: root
+    password: 123456
+  application:
+    name: item-service
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:10086/eureka/
+    #每多少秒获取服务列表
+    registry-fetch-interval-seconds: 5
+  instance:
+    instance-id: ${spring.application.name}:${server.port}
+    #默认以ip优先  而不是主机名
+    prefer-ip-address: true
+    lease-renewal-interval-in-seconds: 5 #eureka 服务查找周期
+    lease-expiration-duration-in-seconds: 10 #eureka 服务过期时间
