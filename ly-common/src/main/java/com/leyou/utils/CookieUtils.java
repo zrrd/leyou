@@ -14,7 +14,7 @@ import lombok.extern.slf4j.Slf4j;
  * @author shaoyijiong
  */
 @Slf4j
-@SuppressWarnings("unused")
+@SuppressWarnings("ALL")
 public final class CookieUtils {
 
 
