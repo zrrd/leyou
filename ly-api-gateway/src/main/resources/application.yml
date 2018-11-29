@@ -7,14 +7,13 @@ spring:
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:10086/eureka/
+      defaultZone: http://47.100.48.207:10086/eureka/
     #每多少秒获取服务列表
     registry-fetch-interval-seconds: 5
   instance:
     instance-id: ${spring.application.name}:${server.port}
     #默认以ip优先  而不是主机名
     prefer-ip-address: true
-    ip-address: 127.0.0.1
 
 
 #熔断   在zuul中最好在后置拦截器里定义超时处理 返回一个页面  用户友好

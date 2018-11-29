@@ -11,7 +11,7 @@ spring:
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:10086/eureka/
+      defaultZone: http://47.100.48.207:10086/eureka/
     #每多少秒获取服务列表
     registry-fetch-interval-seconds: 5
   instance:
