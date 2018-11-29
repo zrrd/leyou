@@ -1,8 +1,7 @@
 package com.leyou.query;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.leyou.item.pojo.Category;
-import com.leyou.query.mapper.CategoryMapper;
+import com.leyou.query.dto.CategoryQueryDto;
+import com.leyou.query.mapper.CategoryQueryMapper;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,19 +15,17 @@ import org.springframework.stereotype.Service;
 @Service
 public class CategoryQuery {
 
-  private final CategoryMapper mapper;
+  private final CategoryQueryMapper mapper;
 
   @Autowired
-  public CategoryQuery(CategoryMapper mapper) {
+  public CategoryQuery(CategoryQueryMapper mapper) {
     this.mapper = mapper;
   }
 
   /**
    * 通过父类目 id 找到所以子类目 id.
    */
-  public List<Category> queryCategoryByPid(Long parentId) {
-    QueryWrapper<Category> qw = new QueryWrapper<>();
-    qw.eq("parent_id", parentId);
-    return mapper.selectList(qw);
+  public List<CategoryQueryDto> queryCategoryByPid(Long parentId) {
+    return mapper.queryCategoryByPid(parentId);
   }
 }

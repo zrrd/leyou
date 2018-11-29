@@ -1,7 +1,7 @@
 package com.leyou.controller;
 
-import com.leyou.item.pojo.Category;
 import com.leyou.query.CategoryQuery;
+import com.leyou.query.dto.CategoryQueryDto;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,8 +34,8 @@ public class CategoryController {
    * @return 子类商品列表
    */
   @GetMapping("list")
-  public ResponseEntity<List<Category>> queryCategoryByPid(Long pid) {
-    List<Category> list = query.queryCategoryByPid(pid);
+  public ResponseEntity<List<CategoryQueryDto>> queryCategoryByPid(Long pid) {
+    List<CategoryQueryDto> list = query.queryCategoryByPid(pid);
     if (list.isEmpty()) {
       // 没找到 返回404
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
