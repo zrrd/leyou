@@ -1,6 +1,6 @@
 package com.leyou.controller.req;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.leyou.base.request.PageReq;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -11,7 +11,7 @@ import lombok.EqualsAndHashCode;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class BrandQueryPageReq extends Page {
+public class BrandQueryPageReq extends PageReq {
 
   String key;
 }

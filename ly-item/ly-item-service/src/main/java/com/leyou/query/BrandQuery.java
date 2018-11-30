@@ -2,7 +2,6 @@ package com.leyou.query;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
 import com.leyou.query.dto.BrandQueryDto;
 import com.leyou.query.mapper.BrandQueryMapper;
@@ -26,7 +25,9 @@ public class BrandQuery {
   }
 
   public IPage<BrandQueryDto> queryBrandByPage(Page page, String key) {
-    key = "%" + key + "%";
+    if (!Strings.isNullOrEmpty(key)) {
+      key = "%" + key + "%";
+    }
     return mapper.queryBrandByPage(page, key);
   }
 }
