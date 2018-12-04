@@ -1,15 +1,14 @@
 package com.leyou.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.collect.Iterables;
+import com.leyou.application.BrandApplication;
+import com.leyou.application.dto.SaveBrandDto;
 import com.leyou.base.response.PageResult;
 import com.leyou.controller.req.BrandQueryPageReq;
-import com.leyou.controller.req.SaveBeandReq;
-import com.leyou.item.pojo.domain.Brand;
+import com.leyou.controller.req.SaveBrandReq;
 import com.leyou.query.BrandQuery;
 import com.leyou.query.dto.BrandQueryDto;
-import java.util.Collections;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,10 +28,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class BrandController {
 
   private final BrandQuery query;
+  private final BrandApplication application;
 
   @Autowired
-  public BrandController(BrandQuery query) {
+  public BrandController(BrandQuery query, BrandApplication application) {
     this.query = query;
+    this.application = application;
   }
 
   /**
@@ -47,8 +48,13 @@ public class BrandController {
     return ResponseEntity.ok(PageResult.getPageResult(page));
   }
 
-  @PostMapping
-  public ResponseEntity<Void> saveBrand(SaveBeandReq req) {
-    return ResponseEntity.ok().body(null);
+  /**
+   * 新增品牌.
+   */
+  @PostMapping("save")
+  public ResponseEntity<Void> saveBrand(SaveBrandReq req) {
+    SaveBrandDto dto = new SaveBrandDto(req.getName(), req.getImage(), req.getLetter());
+    application.saveBrand(dto, req.getCategory());
+    return ResponseEntity.status(HttpStatus.CREATED).build();
   }
 }
