@@ -1,8 +1,10 @@
 package com.leyou.application;
 
 import com.leyou.application.dto.SaveBrandDto;
+import com.leyou.application.mapper.BrandMapper;
 import com.leyou.item.pojo.domain.Brand;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,6 +18,13 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(rollbackFor = Throwable.class)
 public class BrandApplication {
 
+  private final BrandMapper brandMapper;
+
+  @Autowired
+  public BrandApplication(BrandMapper brandMapper) {
+    this.brandMapper = brandMapper;
+  }
+
   /**
    * 新增品牌.
    */
@@ -24,5 +33,6 @@ public class BrandApplication {
     Brand brand = Brand.newInstForSave(dto.getName(), dto.getImage(), dto.getLetter());
     brand.saveBrand();
     //新增品牌和分类的中间表
+    ids.forEach(cid -> brandMapper.insertCategoryBrand(cid, brand.getId()));
   }
 }

@@ -22,10 +22,10 @@ public class MyExceptionHandler {
    * @param e 自定义的异常全部通过这个处理器处理
    * @return 自定义的异常信息, json格式 返回消息类型是正常状态
    */
-  @ResponseStatus(HttpStatus.OK)
+  @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
   @ResponseBody
   @ExceptionHandler(RuntimeException.class)
-  public ResponseEntity<String> handleException(RuntimeException e) {
-    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+  public String handleException(RuntimeException e) {
+    return e.getMessage();
   }
 }

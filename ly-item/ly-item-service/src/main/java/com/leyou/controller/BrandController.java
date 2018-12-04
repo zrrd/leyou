@@ -54,7 +54,7 @@ public class BrandController {
   @PostMapping("save")
   public ResponseEntity<Void> saveBrand(SaveBrandReq req) {
     SaveBrandDto dto = new SaveBrandDto(req.getName(), req.getImage(), req.getLetter());
-    application.saveBrand(dto, req.getCategory());
+    application.saveBrand(dto, req.getCategories());
     return ResponseEntity.status(HttpStatus.CREATED).build();
   }
 }
