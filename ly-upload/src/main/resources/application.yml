@@ -10,3 +10,16 @@ eureka:
     prefer-ip-address: true
     lease-renewal-interval-in-seconds: 5 #eureka 服务查找周期
     lease-expiration-duration-in-seconds: 10 #eureka 服务过期时间
+spring:
+  application:
+    name: upload-service
+server:
+  port: 8082
+fdfs:
+  so-timeout: 1501
+  connect-timeout: 601
+  thumb-image: # 缩略图
+    width: 60
+    height: 60
+  tracker-list: # tracker地址
+    - 47.100.48.207:22122
