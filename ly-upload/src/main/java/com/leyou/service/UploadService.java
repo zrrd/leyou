@@ -1,11 +1,14 @@
 package com.leyou.service;
 
+import com.leyou.file.FileService;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import javax.imageio.ImageIO;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FilenameUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,7 +22,14 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 public class UploadService {
 
+  private final FileService fileService;
+
   private static final List<String> ALLOW_TYPES = Arrays.asList("image/png", "image/jpeg");
+
+  @Autowired
+  public UploadService(FileService fileService) {
+    this.fileService = fileService;
+  }
 
   /**
    * 校验并且上传文件.
@@ -44,6 +54,15 @@ public class UploadService {
     //2. 保存文件到某个位置
     //3. 生成文件地址
     //文件保存
-    return null;
+    String url;
+    try {
+      url = fileService.upload(file.getInputStream(), file.getSize(),
+          FilenameUtils.getExtension(file.getOriginalFilename()));
+    } catch (IOException e) {
+      log.error("文件上传失败:文件名{}", file.getOriginalFilename(), e);
+      throw new RuntimeException("文件上传失败");
+    }
+
+    return url;
   }
 }

@@ -1,8 +1,7 @@
-package com.leyou;
+package com.leyou.item;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 /**
@@ -11,10 +10,10 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  * @author shaoyijiong
  */
 @EnableDiscoveryClient
-@SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
-public class LyUploadApplication {
+@SpringBootApplication
+public class LyItemInterfaceApplication {
 
   public static void main(String[] args) {
-    SpringApplication.run(LyUploadApplication.class, args);
+    SpringApplication.run(LyItemInterfaceApplication.class, args);
   }
 }

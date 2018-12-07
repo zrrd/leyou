@@ -23,3 +23,5 @@ fdfs:
     height: 60
   tracker-list: # tracker地址
     - 47.100.48.207:22122
+
+filePrefix: http://47.100.48.207:8888/

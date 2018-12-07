@@ -6,6 +6,7 @@ import com.github.tobato.fastdfs.service.FastFileStorageClient;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import org.apache.commons.io.FilenameUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

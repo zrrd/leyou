@@ -38,5 +38,10 @@
       <artifactId>fastdfs-client</artifactId>
       <version>1.26.2</version>
     </dependency>
+    <dependency>
+      <groupId>com.leyou.common</groupId>
+      <artifactId>ly-common</artifactId>
+      <version>1.0.0-SNAPSHOT</version>
+    </dependency>
   </dependencies>
 </project>
