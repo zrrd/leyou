@@ -44,6 +44,14 @@
     </dependencies>
   </dependencyManagement>
 
+  <!--maven 上传-->
+  <distributionManagement>
+    <repository>
+      <id>nexus</id>
+      <name>nexus</name>
+      <url>http://47.99.73.15:8081/repository/mymaven/</url>
+    </repository>
+  </distributionManagement>
   <!--maven 插件-->
   <build>
     <plugins>
