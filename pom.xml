@@ -52,15 +52,6 @@
       <url>http://47.99.73.15:8081/repository/mymaven/</url>
     </repository>
   </distributionManagement>
-  <!--maven 插件-->
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-maven-plugin</artifactId>
-      </plugin>
-    </plugins>
-  </build>
 
   <!--Spring仓库-->
   <repositories>
@@ -83,4 +74,27 @@
       <scope>provided</scope>
     </dependency>
   </dependencies>
+
+
+  <build>
+    <plugins>
+      <!-- 设置源文件编码方式 -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>1.8</source>
+          <target>1.8</target>
+          <encoding>UTF-8</encoding>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <configuration>
+          <skip>true</skip>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 </project>
