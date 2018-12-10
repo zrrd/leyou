@@ -23,7 +23,6 @@ eureka:
     lease-expiration-duration-in-seconds: 10 #eureka 服务过期时间
 mybatis-plus:
   mapper-locations: classpath*:mapper/**/*Mapper.xml
-  type-aliases-package: com.leyou.item.pojo.domain
   type-enums-package: com.leyou.item.enums
   configuration:
     map-underscore-to-camel-case: true #驼峰转下划线

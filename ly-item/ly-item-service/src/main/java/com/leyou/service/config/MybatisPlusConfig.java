@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Profile;
  * @date 2018/11/30
  */
 @Configuration
-@MapperScan(basePackages = {"com.leyou.query.mapper","com.leyou.application.mapper"})
+@MapperScan(basePackages = {"com.leyou.service.*.mapper"})
 public class MybatisPlusConfig {
 
   /**

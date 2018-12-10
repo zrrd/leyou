@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.leyou.query.mapper.BrandQueryMapper">
-  <select id="queryBrandByPage" resultType="com.leyou.query.dto.BrandQueryDto">
+<mapper namespace="com.leyou.service.query.mapper.BrandQueryMapper">
+  <select id="queryBrandByPage" resultType="com.leyou.service.query.dto.BrandQueryDto">
     SELECT * FROM tb_brand
     <if test="key != null and key != ''">
       WHERE `name`  LIKE #{key}

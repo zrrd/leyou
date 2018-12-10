@@ -6,7 +6,7 @@ import lombok.Getter;
 /**
  * 保存品牌类.
  *
- * @author 邵益炯
+ * @author shaoyijiong
  * @date 2018/12/4
  */
 @Getter
