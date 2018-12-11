@@ -1,4 +1,4 @@
-package com.leyou.config;
+package com.leyou.common.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,6 +12,7 @@ import org.springframework.web.filter.CorsFilter;
  * @author shaoyijiong
  * @date 2018/11/28
  */
+@SuppressWarnings("ALL")
 @Configuration
 public class GlobalCorsConfig {
 

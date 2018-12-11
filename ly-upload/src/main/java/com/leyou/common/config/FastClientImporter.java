@@ -1,4 +1,4 @@
-package com.leyou.config;
+package com.leyou.common.config;
 
 import com.github.tobato.fastdfs.FdfsClientConfig;
 import org.springframework.context.annotation.Configuration;
@@ -12,6 +12,7 @@ import org.springframework.jmx.support.RegistrationPolicy;
  * @author shaoyijiong
  * @date 2018/12/5
  */
+@SuppressWarnings("ALL")
 @Configuration
 @Import(FdfsClientConfig.class)
 @EnableMBeanExport(registration = RegistrationPolicy.IGNORE_EXISTING)

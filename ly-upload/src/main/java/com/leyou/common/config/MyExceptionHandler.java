@@ -1,4 +1,4 @@
-package com.leyou.config;
+package com.leyou.common.config;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;

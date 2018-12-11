@@ -3,6 +3,8 @@ server:
 spring:
   application:
     name: ly-api-gateway
+  profiles:
+    active: dev
 
 eureka:
   client:
@@ -14,7 +16,18 @@ eureka:
     instance-id: ${spring.application.name}:${server.port}
     #默认以ip优先  而不是主机名
     prefer-ip-address: true
+zuul:
+  prefix: /api #添加路由前缀
+  retryable: true
+  routes:
+    item-service: /item/**
+  ignored-services:
+    - upload-service
+---
+#正式环境才开熔断 方便服务器调试
 
+spring:
+  profiles: prd
 
 #熔断   在zuul中最好在后置拦截器里定义超时处理 返回一个页面  用户友好
 hystrix:
@@ -33,10 +46,19 @@ ribbon:
   MaxAutoRetriesNextServer: 1   #重试切换实例次数 不要太大防止响应太慢
   MaxAutoRetries: 1     #对当前实例的重试次数
 
-zuul:
-  prefix: /api #添加路由前缀
-  retryable: true
-  routes:
-    item-service: /item/**
-  ignored-services:
-    - upload-service
+---
+spring:
+  profiles: dev
+
+#熔断   在zuul中最好在后置拦截器里定义超时处理 返回一个页面  用户友好
+hystrix:
+  command:
+    default:
+      execution:
+        timeout:
+          enabled: false
+
+#负载均衡重试
+ribbon:
+  ConnectTimeout: -1
+  ReadTimeout: -1
