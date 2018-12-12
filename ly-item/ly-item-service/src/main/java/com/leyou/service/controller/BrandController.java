@@ -9,10 +9,15 @@ import com.leyou.service.controller.req.BrandQueryPageReq;
 import com.leyou.service.controller.req.SaveBrandReq;
 import com.leyou.service.query.BrandQuery;
 import com.leyou.service.query.dto.BrandQueryDto;
+import com.leyou.service.query.dto.SelectBrandDto;
+import java.util.ArrayList;
+import java.util.List;
+import javax.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -57,4 +62,17 @@ public class BrandController {
     application.saveBrand(dto, req.getCategories());
     return ResponseEntity.status(HttpStatus.CREATED).build();
   }
+
+  /**
+   * 根据类别查询.
+   */
+  @GetMapping("cid/{id}")
+  public ResponseEntity queryBrandByCategory(@PathVariable Long id) {
+    List<SelectBrandDto> list = query.queryByCategoryId(id);
+    if (Iterables.isEmpty(list)) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
+    return ResponseEntity.ok(list);
+  }
+
 }
