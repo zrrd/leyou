@@ -23,8 +23,6 @@ public class SpecificationsQuery {
   }
 
   public String querySpecByCid(Long cid) {
-    String s = mapper.querySpecByCid(cid);
-    JSONArray array = JSONObject.parseArray(s);
-    return "a";
+    return mapper.querySpecByCid(cid);
   }
 }
