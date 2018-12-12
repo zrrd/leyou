@@ -22,6 +22,7 @@ public class UtilsTest {
     //机器中心 数据中心
     IdWorker idWorker = new IdWorker(10L, 10L);
     long l = idWorker.nextId();
+    System.out.print(l + "");
     ExecutorService service = Executors.newFixedThreadPool(1000);
     for (int j = 0; j < 1000; j++) {
       service.submit(() -> {

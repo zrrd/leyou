@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.leyou.service.query.mapper.SpuQueryMapper">
+  <select id="querySpuByPage" resultType="com.leyou.service.query.dto.SpuQueryDto">
+    SELECT
+    s.id AS id,
+    title,
+    sub_title AS subTitle,
+    brand_id AS brandId,
+    cid1,
+    cid2,
+    cid3,
+    c.`name` AS cname,
+    b.`name` AS bname,
+    saleable
+    FROM
+    tb_spu s
+    LEFT JOIN tb_category c ON s.cid3 = c.id
+    LEFT JOIN tb_brand b ON s.brand_id = b.id
+    <where>
+      <if test="saleable != null">
+        s.saleable = #{saleable}
+      </if>
+      AND s.valid = 1
+      <if test="key != null and key != ''">
+        AND s.title LIKE #{key}
+      </if>
+    </where>
+  </select>
+</mapper>

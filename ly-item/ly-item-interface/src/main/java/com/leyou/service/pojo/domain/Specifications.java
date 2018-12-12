@@ -34,7 +34,7 @@ public class Specifications extends Model<Specifications> {
   }
 
   /**
-   * 根据品类更新
+   * 根据品类更新.
    */
   public void updateByCid() {
     UpdateWrapper<Specifications> uw = new UpdateWrapper<>();

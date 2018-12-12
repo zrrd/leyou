@@ -67,9 +67,10 @@ public class FileServiceImpl implements FileService {
   @Override
   public Map<String, String> uploadAndCreateThumb(File file) {
     String ext = FilenameUtils.getExtension(file.getName());
-    try {
-      return uploadAndCreateThumb(new FileInputStream(file), file.length(), ext);
-    } catch (FileNotFoundException e) {
+
+    try (FileInputStream stream = new FileInputStream(file)) {
+      return uploadAndCreateThumb(stream, file.length(), ext);
+    } catch (IOException e) {
       log.error("文件上传失败:文件名{}", file.getName(), e);
       throw new RuntimeException("文件上传失败");
     }
