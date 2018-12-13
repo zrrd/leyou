@@ -25,7 +25,7 @@ public class Specifications extends Model<Specifications> {
    */
   Long categoryId;
   /**
-   * 规格参数.  jsons
+   * 规格参数.  jsons , global 是否是全局属性 k 参数名 options 选项 searchable 是否是可搜索 unit 单位
    */
   String specifications;
 

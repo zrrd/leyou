@@ -64,4 +64,11 @@ public class SpecificationsController {
     return ResponseEntity.ok().build();
   }
 
+  @GetMapping("params")
+  public ResponseEntity querySpecByCategoryId(Long cid) {
+    return querySpecifications(cid);
+  }
+
+  ;
+
 }
