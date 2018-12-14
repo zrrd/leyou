@@ -25,7 +25,7 @@ public enum Saleable implements IEnum {
     this.value = value;
   }
 
-  public Saleable get(Boolean value) {
+  public static Saleable get(Boolean value) {
     for (Saleable e : Saleable.values()) {
       if (e.value.equals(value)) {
         return e;

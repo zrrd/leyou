@@ -25,7 +25,7 @@ public enum Valid implements IEnum {
     this.value = value;
   }
 
-  public Valid get(Boolean value) {
+  public static Valid get(Boolean value) {
     for (Valid e : Valid.values()) {
       if (e.value.equals(value)) {
         return e;

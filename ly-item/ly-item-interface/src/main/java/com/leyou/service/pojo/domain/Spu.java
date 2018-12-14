@@ -1,6 +1,7 @@
 package com.leyou.service.pojo.domain;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.leyou.service.enums.Saleable;
 import com.leyou.service.enums.Valid;
 import java.util.Date;
@@ -19,7 +20,7 @@ import lombok.Setter;
 @Setter(AccessLevel.PRIVATE)
 @AllArgsConstructor
 @TableName("tb_spu")
-public class Spu {
+public class Spu extends Model<Spu> {
 
   Long id;
   String title;
@@ -39,4 +40,9 @@ public class Spu {
   Date createTime;
   Date lastUpdateTime;
 
+  public static Spu newInstForSave(Long brandId, Long cid1, Long cid2, Long cid3, String title,
+      String subTitle) {
+    return new Spu(null, title, subTitle, cid1, cid2, cid3,
+        brandId, Saleable.SALE, Valid.ENABLE, new Date(), new Date());
+  }
 }

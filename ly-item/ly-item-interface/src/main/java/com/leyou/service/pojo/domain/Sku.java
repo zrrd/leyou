@@ -1,6 +1,7 @@
 package com.leyou.service.pojo.domain;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.leyou.service.enums.SkuEnable;
 import java.util.Date;
 import lombok.AccessLevel;
@@ -18,7 +19,7 @@ import lombok.Setter;
 @Setter(AccessLevel.PRIVATE)
 @AllArgsConstructor
 @TableName("tb_sku")
-public class Sku {
+public class Sku extends Model<Sku> {
 
   Long id;
   Long spuId;
@@ -48,4 +49,10 @@ public class Sku {
   SkuEnable enable;
   Date createTime;
   Date lastUpdateTime;
+
+  public static Sku newInstForSave(Long spuId, Boolean enable, Long price, String images,
+      String indexes, String ownSpec, String title) {
+    return new Sku(null, spuId, title, images, price, indexes, ownSpec, SkuEnable.get(enable),
+        new Date(), new Date());
+  }
 }

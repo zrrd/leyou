@@ -2,6 +2,7 @@ package com.leyou.service.pojo.domain;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,7 +18,7 @@ import lombok.Setter;
 @Setter(AccessLevel.PRIVATE)
 @AllArgsConstructor
 @TableName("tb_spu_detail")
-public class SpuDetail {
+public class SpuDetail extends Model<SpuDetail> {
 
   @TableId
   Long spuId;
@@ -42,4 +43,9 @@ public class SpuDetail {
    */
   String afterService;
 
+  public static SpuDetail newInstForSave(Long spuId, String description, String specifications,
+      String specTemplate, String packingList, String afterService) {
+    return new SpuDetail(spuId, description, specifications, specTemplate, packingList,
+        afterService);
+  }
 }

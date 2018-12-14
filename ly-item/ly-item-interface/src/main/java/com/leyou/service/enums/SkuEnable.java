@@ -25,7 +25,10 @@ public enum SkuEnable implements IEnum {
     this.value = value;
   }
 
-  public SkuEnable get(Boolean value) {
+  /**
+   * 通过值获取枚举.
+   */
+  public static SkuEnable get(Boolean value) {
     for (SkuEnable e : SkuEnable.values()) {
       if (e.value.equals(value)) {
         return e;
