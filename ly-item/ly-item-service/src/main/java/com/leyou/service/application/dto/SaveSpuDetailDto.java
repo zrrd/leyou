@@ -18,4 +18,7 @@ public class SaveSpuDetailDto {
   String packingList;
   String afterService;
 
+  public SaveSpuDetailDto(Long spuId) {
+    this.spuId = spuId;
+  }
 }

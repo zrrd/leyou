@@ -16,9 +16,10 @@ public class SpuApplication {
   /**
    * 保存spu.
    */
-  public void saveSpu(SaveSpuDto dto) {
+  public Long saveSpu(SaveSpuDto dto) {
     Spu spu = Spu.newInstForSave(dto.getBrandId(), dto.getCid1(), dto.getCid2(), dto.getCid3(),
         dto.getTitle(), dto.getSubTitle());
     spu.insert();
+    return spu.getId();
   }
 }

@@ -16,9 +16,10 @@ public class SkuApplication {
   /**
    * 保存sku.
    */
-  public void saveSku(SaveSkuDto dto) {
+  public Long saveSku(SaveSkuDto dto) {
     Sku sku = Sku.newInstForSave(dto.getSpuId(), dto.getEnable(), dto.getPrice(), dto.getImages(),
         dto.getIndexes(), dto.getOwnSpec(), dto.getTitle());
     sku.insert();
+    return sku.getId();
   }
 }

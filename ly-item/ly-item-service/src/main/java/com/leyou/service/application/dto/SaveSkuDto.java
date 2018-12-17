@@ -1,5 +1,6 @@
 package com.leyou.service.application.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 /**
@@ -18,4 +19,8 @@ public class SaveSkuDto {
   String indexes;
   String ownSpec;
   String title;
+
+  public SaveSkuDto(Long spuId) {
+    this.spuId = spuId;
+  }
 }

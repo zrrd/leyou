@@ -2,6 +2,7 @@ package com.leyou.service.controller.req;
 
 import com.leyou.common.base.request.Req;
 import java.util.List;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 /**
@@ -11,38 +12,46 @@ import lombok.Data;
  * @date 2018/12/14
  */
 @Data
+@AllArgsConstructor
 public class SaveGoodsReq implements Req {
 
-  Long brandId;
-  Long cid1;
-  Long cid2;
-  Long cid3;
-  List<Sku> skus;
-  SubTitle spuDetail;
-  String subTitle;
-  String title;
+  private Long brandId;
+  private String title;
+  private String subTitle;
+  private SpuDetailBean spuDetail;
+  private Long cid1;
+  private Long cid2;
+  private Long cid3;
+  private List<CategoriesBean> categories;
+  private List<SkusBean> skus;
 
   @Data
-  class Sku {
+  private static class SpuDetailBean {
 
-    Long id;
-    Boolean enable;
-    String images;
-    String indexes;
-    String ownSpec;
-    Long price;
-    Integer stock;
-    String title;
+    private String packingList;
+    private String afterService;
+    private String description;
+    private String specTemplate;
+    private String specifications;
   }
 
   @Data
-  class SubTitle {
+  private static class CategoriesBean {
 
-    String afterService;
-    String description;
-    String packingList;
-    String specTemplate;
-    String specifications;
+    private String name;
+    private Long id;
   }
 
+  @Data
+  public static class SkusBean {
+
+    private Long id;
+    private Boolean enable;
+    private String title;
+    private String images;
+    private Long price;
+    private String ownSpec;
+    private String indexes;
+    private Integer stock;
+  }
 }

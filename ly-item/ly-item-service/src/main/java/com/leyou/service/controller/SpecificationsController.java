@@ -69,6 +69,4 @@ public class SpecificationsController {
     return querySpecifications(cid);
   }
 
-  ;
-
 }

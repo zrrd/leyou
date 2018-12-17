@@ -1,5 +1,6 @@
 package com.leyou.service.config;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  * @author 邵益炯
  * @date 2018/12/4
  */
+@Slf4j
 @ControllerAdvice
 public class MyExceptionHandler {
 
@@ -26,6 +28,7 @@ public class MyExceptionHandler {
   @ResponseBody
   @ExceptionHandler(RuntimeException.class)
   public String handleException(RuntimeException e) {
+    log.error("服务器错误",e);
     return e.getMessage();
   }
 }

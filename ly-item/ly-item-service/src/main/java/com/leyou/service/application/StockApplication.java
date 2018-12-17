@@ -1,5 +1,6 @@
 package com.leyou.service.application;
 
+import com.leyou.service.pojo.domain.Stock;
 import org.springframework.stereotype.Service;
 
 /**
@@ -10,4 +11,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class StockApplication {
 
+  public void saveStock(Long skuId,Integer stockNum) {
+    Stock stock = Stock.newInstForSave(skuId, stockNum);
+    stock.insert();
+  }
 }
