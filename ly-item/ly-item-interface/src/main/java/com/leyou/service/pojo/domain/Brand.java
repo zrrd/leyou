@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
+import com.leyou.common.base.exception.ExceptionEnum;
+import com.leyou.common.base.exception.LyException;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -77,7 +79,7 @@ public class Brand extends Model<Brand> {
     qw.eq("name", name);
     Integer num = selectCount(qw);
     if (num > 0) {
-      throw new RuntimeException("该品牌名称已被使用,请使用其他品牌名称");
+      throw new LyException(ExceptionEnum.BRAND_NAME_USED);
     }
   }
 }

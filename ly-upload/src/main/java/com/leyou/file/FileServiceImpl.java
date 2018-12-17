@@ -4,9 +4,10 @@ import com.github.tobato.fastdfs.domain.StorePath;
 import com.github.tobato.fastdfs.domain.ThumbImageConfig;
 import com.github.tobato.fastdfs.service.FastFileStorageClient;
 import com.google.common.collect.Maps;
+import com.leyou.common.base.exception.ExceptionEnum;
+import com.leyou.common.base.exception.LyException;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -50,7 +51,7 @@ public class FileServiceImpl implements FileService {
       inputStream = FileUtils.openInputStream(file);
     } catch (IOException e) {
       log.error("文件上传失败:文件名{}", file.getName(), e);
-      throw new RuntimeException("文件上传失败");
+      throw new LyException(ExceptionEnum.UPLOAD_ERROR);
     }
     return upload(inputStream, file.length(), ext);
   }
@@ -72,7 +73,7 @@ public class FileServiceImpl implements FileService {
       return uploadAndCreateThumb(stream, file.length(), ext);
     } catch (IOException e) {
       log.error("文件上传失败:文件名{}", file.getName(), e);
-      throw new RuntimeException("文件上传失败");
+      throw new LyException(ExceptionEnum.UPLOAD_ERROR);
     }
   }
 

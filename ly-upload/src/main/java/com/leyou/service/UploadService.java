@@ -1,5 +1,7 @@
 package com.leyou.service;
 
+import com.leyou.common.base.exception.ExceptionEnum;
+import com.leyou.common.base.exception.LyException;
 import com.leyou.file.FileService;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -39,7 +41,7 @@ public class UploadService {
     //1.1 校验文件类型
     String type = file.getContentType();
     if (!ALLOW_TYPES.contains(type)) {
-      throw new RuntimeException("上传失败，文件类型不匹配");
+      throw new LyException(ExceptionEnum.UPLOAD_MISMATCH);
     }
     //1.2 校验文件数据内容
     BufferedImage img = null;
@@ -49,7 +51,7 @@ public class UploadService {
       e.printStackTrace();
     }
     if (img == null) {
-      throw new RuntimeException("上传失败图片错误");
+      throw new LyException(ExceptionEnum.UPLOAD_IMAGE_ERROR);
     }
     //2. 保存文件到某个位置
     //3. 生成文件地址
@@ -60,7 +62,7 @@ public class UploadService {
           FilenameUtils.getExtension(file.getOriginalFilename()));
     } catch (IOException e) {
       log.error("文件上传失败:文件名{}", file.getOriginalFilename(), e);
-      throw new RuntimeException("文件上传失败");
+      throw new LyException(ExceptionEnum.UPLOAD_ERROR);
     }
 
     return url;
