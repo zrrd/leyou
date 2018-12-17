@@ -1,6 +1,7 @@
 package com.leyou.service.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.google.common.collect.Lists;
 import com.leyou.common.base.response.PageResult;
 import com.leyou.service.application.SkuApplication;
 import com.leyou.service.application.SpuApplication;
@@ -9,11 +10,13 @@ import com.leyou.service.application.StockApplication;
 import com.leyou.service.application.dto.SaveSkuDto;
 import com.leyou.service.application.dto.SaveSpuDetailDto;
 import com.leyou.service.application.dto.SaveSpuDto;
+import com.leyou.service.application.dto.SaveStockDto;
 import com.leyou.service.controller.req.SaveGoodsReq;
 import com.leyou.service.controller.req.SaveGoodsReq.SkusBean;
 import com.leyou.service.controller.req.SpuQueryPageReq;
 import com.leyou.service.query.GoodsQuery;
 import com.leyou.service.query.dto.SpuQueryDto;
+import java.util.List;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -76,14 +79,18 @@ public class GoodsController {
     BeanUtils.copyProperties(req.getSpuDetail(), saveSpuDetailDto);
     spuDetailApplication.saveSpuDetail(saveSpuDetailDto);
 
+    List<SaveStockDto> stockDtos = Lists.newArrayList();
     for (SkusBean sku : req.getSkus()) {
       //保存商品实体信息
       SaveSkuDto saveSkuDto = new SaveSkuDto(spuId);
       BeanUtils.copyProperties(sku, saveSkuDto);
       Long skuId = skuApplication.saveSku(saveSkuDto);
       //保存库存信息
-      stockApplication.saveStock(skuId, sku.getStock());
+      SaveStockDto saveStockDto = new SaveStockDto(skuId, sku.getStock());
+      stockDtos.add(saveStockDto);
     }
+    //批量存入数据库
+    stockApplication.saveStock(stockDtos);
 
     return ResponseEntity.status(HttpStatus.CREATED).build();
   }
