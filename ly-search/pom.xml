@@ -5,13 +5,13 @@
   <modelVersion>4.0.0</modelVersion>
 
 
-  <groupId>com.leyou.common</groupId>
-  <artifactId>ly-registry</artifactId>
+  <groupId>com.leyou.search</groupId>
+  <artifactId>ly-search</artifactId>
   <version>1.0.0-SNAPSHOT</version>
   <packaging>jar</packaging>
 
-  <name>ly-registry</name>
-  <description>乐优商场注册中心</description>
+  <name>ly-search</name>
+  <description>乐优商城搜索</description>
 
   <parent>
     <artifactId>leyou</artifactId>
@@ -21,10 +21,21 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.springframework.cloud</groupId>
-      <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-data-elasticsearch</artifactId>
     </dependency>
-
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-starter-openfeign</artifactId>
+    </dependency>
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
@@ -35,7 +46,13 @@
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>com.leyou.service</groupId>
+      <artifactId>ly-item-interface</artifactId>
+      <version>1.0.0-SNAPSHOT</version>
+    </dependency>
   </dependencies>
+
   <build>
     <plugins>
       <plugin>
@@ -44,6 +61,4 @@
       </plugin>
     </plugins>
   </build>
-
-
 </project>
