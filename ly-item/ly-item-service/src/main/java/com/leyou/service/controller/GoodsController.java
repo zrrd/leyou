@@ -42,7 +42,9 @@ public class GoodsController {
   private final SpuDetailApplication spuDetailApplication;
   private final StockApplication stockApplication;
 
-  @SuppressWarnings("CheckStyle")
+  /**
+   * 注入
+   */
   @Autowired
   public GoodsController(GoodsQuery goodsQuery, SkuApplication skuApplication,
       SpuApplication spuApplication, SpuDetailApplication spuDetailApplication,
@@ -79,7 +81,7 @@ public class GoodsController {
     BeanUtils.copyProperties(req.getSpuDetail(), saveSpuDetailDto);
     spuDetailApplication.saveSpuDetail(saveSpuDetailDto);
 
-    List<SaveStockDto> stockDtos = Lists.newArrayList();
+    List<SaveStockDto> stockDtoList = Lists.newArrayList();
     for (SkusBean sku : req.getSkus()) {
       //保存商品实体信息
       SaveSkuDto saveSkuDto = new SaveSkuDto(spuId);
@@ -87,10 +89,10 @@ public class GoodsController {
       Long skuId = skuApplication.saveSku(saveSkuDto);
       //保存库存信息
       SaveStockDto saveStockDto = new SaveStockDto(skuId, sku.getStock());
-      stockDtos.add(saveStockDto);
+      stockDtoList.add(saveStockDto);
     }
     //批量存入数据库
-    stockApplication.saveStock(stockDtos);
+    stockApplication.saveStock(stockDtoList);
 
     return ResponseEntity.status(HttpStatus.CREATED).build();
   }

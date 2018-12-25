@@ -1,12 +1,22 @@
 package com.leyou.service.controller;
 
+import com.leyou.service.application.CategoryApplication;
+import com.leyou.service.application.dto.SaveCategoryDto;
+import com.leyou.service.controller.req.EditCategoryReq;
+import com.leyou.service.controller.req.SaveCategoryReq;
 import com.leyou.service.query.CategoryQuery;
 import com.leyou.service.query.dto.CategoryQueryDto;
 import java.util.List;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,11 +30,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("category")
 public class CategoryController {
 
+  private final CategoryApplication application;
+
   private final CategoryQuery query;
 
   @Autowired
-  public CategoryController(CategoryQuery query) {
+  public CategoryController(CategoryQuery query, CategoryApplication application) {
     this.query = query;
+    this.application = application;
   }
 
   /**
@@ -42,6 +55,30 @@ public class CategoryController {
     }
     // 找到返回 200
     return ResponseEntity.ok(list);
+  }
+
+  /**
+   * 保存商品品类
+   */
+  @PostMapping
+  public ResponseEntity<Void> saveCategory(@RequestBody SaveCategoryReq req) {
+    SaveCategoryDto dto = new SaveCategoryDto();
+    BeanUtils.copyProperties(req, dto);
+    application.saveCategory(dto);
+    return ResponseEntity.status(HttpStatus.CREATED).build();
+  }
+
+  @PutMapping("{id}")
+  public ResponseEntity<Void> editCategory(@PathVariable Long id,
+      @RequestBody EditCategoryReq req) {
+    application.editCategory(id, req.getName());
+    return ResponseEntity.status(HttpStatus.OK).build();
+  }
+
+  @DeleteMapping("{id}")
+  public ResponseEntity<Void> deleteCategory(@PathVariable Long id) {
+    application.deleteCategory(id);
+    return ResponseEntity.status(HttpStatus.OK).build();
   }
 
 }

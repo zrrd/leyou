@@ -5,7 +5,9 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
@@ -16,6 +18,8 @@ import lombok.Setter;
  */
 @Getter
 @Setter(AccessLevel.PRIVATE)
+@AllArgsConstructor
+@NoArgsConstructor
 @TableName("tb_category")
 public class Category extends Model<Category> {
 
@@ -25,4 +29,23 @@ public class Category extends Model<Category> {
   private Long parentId;
   private Boolean isParent;
   private Integer sort;
+
+  public static Category newIntsForSave(String name, Long parentId, Boolean isParent,
+      Integer sort) {
+    return new Category(null, name, parentId, isParent, sort);
+  }
+
+  public static Category newIntsForEdit(Long id, String name) {
+    Category category = new Category();
+    category.setId(id);
+    category.setName(name);
+    return category;
+  }
+
+  public static Category newIntsForDelete(Long id) {
+    Category category = new Category();
+    category.setId(id);
+    return category;
+  }
+
 }

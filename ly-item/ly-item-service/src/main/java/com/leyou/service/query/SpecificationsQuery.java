@@ -1,7 +1,5 @@
 package com.leyou.service.query;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.leyou.service.query.mapper.SpecificationsQueryMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

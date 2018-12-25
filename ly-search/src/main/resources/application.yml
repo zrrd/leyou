@@ -10,9 +10,7 @@ eureka:
   client:
     service-url:
       defaultZone: http://47.100.48.207:10086/eureka/
-    #\u6BCF\u591A\u5C11\u79D2\u83B7\u53D6\u670D\u52A1\u5217\u8868
     registry-fetch-interval-seconds: 5
   instance:
     instance-id: ${spring.application.name}:${server.port}
-    #\u9ED8\u8BA4\u4EE5ip\u4F18\u5148  \u800C\u4E0D\u662F\u4E3B\u673A\u540D
     prefer-ip-address: true
