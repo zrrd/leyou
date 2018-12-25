@@ -81,4 +81,13 @@ public class CategoryController {
     return ResponseEntity.status(HttpStatus.OK).build();
   }
 
+  @GetMapping("bid/{bid}")
+  public ResponseEntity<List<CategoryQueryDto>> queryByBrandId(@PathVariable("bid") Long bid) {
+    List<CategoryQueryDto> list = query.queryCategoryByBid(bid);
+    if (list == null || list.size() < 1) {
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+    return ResponseEntity.ok(list);
+  }
+
 }

@@ -4,22 +4,24 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.google.common.collect.Iterables;
 import com.leyou.common.base.response.PageResult;
 import com.leyou.service.application.BrandApplication;
+import com.leyou.service.application.dto.EditBrandDto;
 import com.leyou.service.application.dto.SaveBrandDto;
 import com.leyou.service.controller.req.BrandQueryPageReq;
+import com.leyou.service.controller.req.EditCategoryReq;
 import com.leyou.service.controller.req.SaveBrandReq;
 import com.leyou.service.query.BrandQuery;
 import com.leyou.service.query.dto.BrandQueryDto;
 import com.leyou.service.query.dto.SelectBrandDto;
-import java.util.ArrayList;
 import java.util.List;
-import javax.websocket.server.PathParam;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -57,10 +59,10 @@ public class BrandController {
   /**
    * 新增品牌.
    */
-  @PostMapping("save")
+  @PostMapping
   public ResponseEntity<Void> saveBrand(SaveBrandReq req) {
     SaveBrandDto dto = new SaveBrandDto(req.getName(), req.getImage(), req.getLetter());
-    application.saveBrand(dto, req.getCategories());
+    application.saveBrand(dto, req.getCids());
     return ResponseEntity.status(HttpStatus.CREATED).build();
   }
 
@@ -68,7 +70,7 @@ public class BrandController {
    * 根据类别查询.
    */
   @GetMapping("cid/{id}")
-  public ResponseEntity queryBrandByCategory(@PathVariable Long id) {
+  public ResponseEntity<List<SelectBrandDto>> queryBrandByCategory(@PathVariable Long id) {
     List<SelectBrandDto> list = query.queryByCategoryId(id);
     if (Iterables.isEmpty(list)) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
@@ -76,4 +78,20 @@ public class BrandController {
     return ResponseEntity.ok(list);
   }
 
+  /**
+   * 修改品牌
+   */
+  @PutMapping
+  public ResponseEntity<Void> editBrand(EditCategoryReq req) {
+    EditBrandDto editBrandDto = new EditBrandDto();
+    BeanUtils.copyProperties(req, editBrandDto);
+    application.editBrand(editBrandDto, req.getCids());
+    return ResponseEntity.ok().build();
+  }
+
+  @DeleteMapping("{id}")
+  public ResponseEntity<Void> deleteCategory(@PathVariable Long id) {
+    application.deleteBrand(id);
+    return ResponseEntity.ok().build();
+  }
 }

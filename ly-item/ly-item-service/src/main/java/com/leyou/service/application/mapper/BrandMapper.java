@@ -2,6 +2,7 @@ package com.leyou.service.application.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.leyou.service.pojo.domain.Brand;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 
@@ -22,4 +23,6 @@ public interface BrandMapper extends BaseMapper<Brand> {
   @Insert("INSERT INTO tb_category_brand VALUES (#{cid},#{bid})")
   void insertCategoryBrand(@Param("cid") Long cid, @Param("bid") Long bid);
 
+  @Delete("DELETE FROM tb_category_brand WHERE brand_id = #{bid}")
+  void deleteCategoryBrandByBid(Long bid);
 }

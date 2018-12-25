@@ -28,4 +28,8 @@ public class CategoryQuery {
   public List<CategoryQueryDto> queryCategoryByPid(Long parentId) {
     return mapper.queryCategoryByPid(parentId);
   }
+
+  public List<CategoryQueryDto> queryCategoryByBid(Long bid) {
+    return mapper.queryCategoryByBid(bid);
+  }
 }

@@ -5,13 +5,13 @@ import java.util.List;
 import lombok.Data;
 
 /**
- * 修改分类请求
+ * .
  *
- * @author shaoyijiong
- * @date 2018/12/25
+ * @author shaoyijong
+ * @date 2018/11/30
  */
 @Data
-public class EditCategoryReq implements Req {
+public class EditBrandReq implements Req {
 
   private Long id;
   private String name;
@@ -20,5 +20,5 @@ public class EditCategoryReq implements Req {
   /**
    * 类目ids.
    */
-  private List<Long> cids;
+  private List<Long> categories;
 }

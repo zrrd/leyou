@@ -21,4 +21,13 @@ public interface CategoryQueryMapper {
    */
   @Select("SELECT * FROM tb_category WHERE parent_id = #{parentId}")
   List<CategoryQueryDto> queryCategoryByPid(Long parentId);
+
+  /**
+   * 查询品类
+   *
+   * @param bid 品牌id
+   * @return 品类列表
+   */
+  @Select("SELECT * FROM tb_category WHERE id IN (SELECT category_id FROM tb_category_brand WHERE brand_id = #{bid})")
+  List<CategoryQueryDto> queryCategoryByBid(Long bid);
 }

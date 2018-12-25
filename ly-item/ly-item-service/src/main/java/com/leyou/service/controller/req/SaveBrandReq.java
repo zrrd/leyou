@@ -19,5 +19,5 @@ public class SaveBrandReq implements Req {
   /**
    * 类目ids.
    */
-  private List<Long> categories;
+  private List<Long> cids;
 }

@@ -48,8 +48,7 @@ public class Brand extends Model<Brand> {
   /**
    * 全参构造.
    */
-  @SuppressWarnings("WeakerAccess")
-  public Brand(Long id, String name, String image, Character letter) {
+  private Brand(Long id, String name, String image, Character letter) {
     this.id = id;
     this.name = name;
     this.image = image;
@@ -57,10 +56,26 @@ public class Brand extends Model<Brand> {
   }
 
   /**
-   * 构建品牌.
+   * 构建品牌
    */
   public static Brand newInstForSave(String name, String image, Character letter) {
     return new Brand(null, name, image, letter);
+  }
+
+  /**
+   * 编辑品牌
+   */
+  public static Brand newInstForEdit(Long id, String name, String image, Character letter) {
+    return new Brand(id, name, image, letter);
+  }
+
+  /**
+   * 删除品牌
+   */
+  public static Brand newInstForDelete(Long id) {
+    Brand brand = new Brand();
+    brand.setId(id);
+    return brand;
   }
 
   /**

@@ -1,5 +1,6 @@
 package com.leyou.service.application;
 
+import com.leyou.service.application.dto.EditBrandDto;
 import com.leyou.service.application.dto.SaveBrandDto;
 import com.leyou.service.application.mapper.BrandMapper;
 import com.leyou.service.pojo.domain.Brand;
@@ -26,7 +27,7 @@ public class BrandApplication {
   }
 
   /**
-   * 新增品牌.
+   * 新增品牌
    */
   public void saveBrand(SaveBrandDto dto, List<Long> ids) {
     //新增品牌
@@ -34,5 +35,24 @@ public class BrandApplication {
     brand.saveBrand();
     //新增品牌和分类的中间表
     ids.forEach(cid -> brandMapper.insertCategoryBrand(cid, brand.getId()));
+  }
+
+  /**
+   * 修改品牌
+   */
+  public void editBrand(EditBrandDto dto, List<Long> ids) {
+    Brand brand = Brand.newInstForEdit(dto.getId(), dto.getName(), dto.getImage(), dto.getLetter());
+    brand.updateById();
+    brandMapper.deleteCategoryBrandByBid(dto.getId());
+    ids.forEach(cid -> brandMapper.insertCategoryBrand(cid, brand.getId()));
+  }
+
+  /**
+   * 删除品牌
+   */
+  public void deleteBrand(Long id) {
+    Brand brand = Brand.newInstForDelete(id);
+    brand.deleteById();
+    brandMapper.deleteCategoryBrandByBid(id);
   }
 }
