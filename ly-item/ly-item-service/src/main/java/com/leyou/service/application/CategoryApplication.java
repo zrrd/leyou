@@ -1,7 +1,7 @@
 package com.leyou.service.application;
 
-import com.leyou.service.application.dto.SaveCategoryDto;
 import com.leyou.service.pojo.domain.Category;
+import com.leyou.service.pojo.dto.application.SaveCategoryDto;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

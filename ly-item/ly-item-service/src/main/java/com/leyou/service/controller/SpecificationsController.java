@@ -2,7 +2,7 @@ package com.leyou.service.controller;
 
 import com.google.common.base.Strings;
 import com.leyou.service.application.SpecificationsApplication;
-import com.leyou.service.controller.req.SaveSpecReq;
+import com.leyou.service.mvc.req.SaveSpecReq;
 import com.leyou.service.query.SpecificationsQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

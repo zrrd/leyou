@@ -1,4 +1,4 @@
-package com.leyou.service.query.dto;
+package com.leyou.service.pojo.dto.query;
 
 import lombok.Data;
 

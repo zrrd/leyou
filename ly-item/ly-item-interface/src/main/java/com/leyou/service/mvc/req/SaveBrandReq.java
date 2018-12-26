@@ -1,4 +1,4 @@
-package com.leyou.service.controller.req;
+package com.leyou.service.mvc.req;
 
 import com.leyou.common.base.request.Req;
 import java.util.List;
@@ -11,14 +11,13 @@ import lombok.Data;
  * @date 2018/11/30
  */
 @Data
-public class EditBrandReq implements Req {
+public class SaveBrandReq implements Req {
 
-  private Long id;
   private String name;
   private String image;
   private Character letter;
   /**
    * 类目ids.
    */
-  private List<Long> categories;
+  private List<Long> cids;
 }

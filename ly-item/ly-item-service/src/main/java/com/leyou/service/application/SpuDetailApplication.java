@@ -1,7 +1,7 @@
 package com.leyou.service.application;
 
-import com.leyou.service.application.dto.SaveSpuDetailDto;
 import com.leyou.service.pojo.domain.SpuDetail;
+import com.leyou.service.pojo.dto.application.SaveSpuDetailDto;
 import org.springframework.stereotype.Service;
 
 /**

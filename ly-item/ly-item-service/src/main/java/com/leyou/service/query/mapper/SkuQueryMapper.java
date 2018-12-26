@@ -1,6 +1,6 @@
 package com.leyou.service.query.mapper;
 
-import com.leyou.service.query.dto.SkuQueryDto;
+import com.leyou.service.pojo.dto.query.SkuQueryDto;
 import java.util.List;
 import org.apache.ibatis.annotations.Select;
 

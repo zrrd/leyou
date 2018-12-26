@@ -1,4 +1,4 @@
-package com.leyou.service.controller.req;
+package com.leyou.service.mvc.req;
 
 import com.leyou.common.base.request.Req;
 import java.util.List;

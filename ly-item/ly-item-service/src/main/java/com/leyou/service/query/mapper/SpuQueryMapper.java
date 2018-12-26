@@ -2,7 +2,7 @@ package com.leyou.service.query.mapper;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.leyou.service.query.dto.SpuQueryDto;
+import com.leyou.service.pojo.dto.query.SpuQueryDto;
 import org.apache.ibatis.annotations.Param;
 
 /**

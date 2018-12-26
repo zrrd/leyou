@@ -1,9 +1,9 @@
 package com.leyou.service.application;
 
-import com.leyou.service.application.dto.EditBrandDto;
-import com.leyou.service.application.dto.SaveBrandDto;
 import com.leyou.service.application.mapper.BrandMapper;
 import com.leyou.service.pojo.domain.Brand;
+import com.leyou.service.pojo.dto.application.EditBrandDto;
+import com.leyou.service.pojo.dto.application.SaveBrandDto;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

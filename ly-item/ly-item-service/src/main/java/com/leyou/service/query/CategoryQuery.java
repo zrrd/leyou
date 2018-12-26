@@ -1,6 +1,6 @@
 package com.leyou.service.query;
 
-import com.leyou.service.query.dto.CategoryQueryDto;
+import com.leyou.service.pojo.dto.query.CategoryQueryDto;
 import com.leyou.service.query.mapper.CategoryQueryMapper;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;

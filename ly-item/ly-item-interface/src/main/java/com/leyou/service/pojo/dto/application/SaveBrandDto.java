@@ -1,6 +1,6 @@
-package com.leyou.service.application.dto;
+package com.leyou.service.pojo.dto.application;
 
-import lombok.Data;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
@@ -10,10 +10,8 @@ import lombok.Getter;
  * @date 2018/12/4
  */
 @Getter
-@Data
-public class EditBrandDto {
-
-  private Long id;
+@AllArgsConstructor
+public class SaveBrandDto {
   private String name;
   private String image;
   private Character letter;

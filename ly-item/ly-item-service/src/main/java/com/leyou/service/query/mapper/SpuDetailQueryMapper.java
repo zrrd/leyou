@@ -1,6 +1,6 @@
 package com.leyou.service.query.mapper;
 
-import com.leyou.service.query.dto.SpuDetailEditQueryDto;
+import com.leyou.service.pojo.dto.query.SpuDetailEditQueryDto;
 import org.apache.ibatis.annotations.Select;
 
 /**

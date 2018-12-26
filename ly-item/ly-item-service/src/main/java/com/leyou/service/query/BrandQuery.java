@@ -3,12 +3,10 @@ package com.leyou.service.query;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.base.Strings;
-import com.leyou.service.query.dto.BrandQueryDto;
-import com.leyou.service.query.dto.SelectBrandDto;
+import com.leyou.service.pojo.dto.query.BrandQueryDto;
+import com.leyou.service.pojo.dto.query.SelectBrandDto;
 import com.leyou.service.query.mapper.BrandQueryMapper;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,5 +38,9 @@ public class BrandQuery {
 
   public List<SelectBrandDto> queryByCategoryId(Long cid) {
     return mapper.queryByCategoryId(cid);
+  }
+
+  public String queryBrandName(Long id) {
+    return mapper.queryBrandName(id);
   }
 }

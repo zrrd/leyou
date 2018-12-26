@@ -1,4 +1,4 @@
-package com.leyou.service.application.dto;
+package com.leyou.service.pojo.dto.application;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

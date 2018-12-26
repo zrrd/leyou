@@ -1,8 +1,9 @@
 package com.leyou.service.query.mapper;
 
 
-import com.leyou.service.query.dto.CategoryQueryDto;
+import com.leyou.service.pojo.dto.query.CategoryQueryDto;
 import java.util.List;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 /**
@@ -31,4 +32,12 @@ public interface CategoryQueryMapper {
   @Select("SELECT * FROM tb_category WHERE id IN "
       + "(SELECT category_id FROM tb_category_brand WHERE brand_id = #{bid})")
   List<CategoryQueryDto> queryCategoryByBid(Long bid);
+
+  /**
+   * 根据id查名称
+   *
+   * @param ids ids
+   * @return 名称列表
+   */
+  List<String> queryCategoryNames(@Param("ids") List<Long> ids);
 }

@@ -1,17 +1,18 @@
 package com.leyou.service.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.google.common.base.Strings;
 import com.google.common.collect.Iterables;
 import com.leyou.common.base.response.PageResult;
 import com.leyou.service.application.BrandApplication;
-import com.leyou.service.application.dto.EditBrandDto;
-import com.leyou.service.application.dto.SaveBrandDto;
-import com.leyou.service.controller.req.BrandQueryPageReq;
-import com.leyou.service.controller.req.EditCategoryReq;
-import com.leyou.service.controller.req.SaveBrandReq;
+import com.leyou.service.mvc.req.BrandQueryPageReq;
+import com.leyou.service.mvc.req.EditCategoryReq;
+import com.leyou.service.mvc.req.SaveBrandReq;
+import com.leyou.service.pojo.dto.application.EditBrandDto;
+import com.leyou.service.pojo.dto.application.SaveBrandDto;
+import com.leyou.service.pojo.dto.query.BrandQueryDto;
+import com.leyou.service.pojo.dto.query.SelectBrandDto;
 import com.leyou.service.query.BrandQuery;
-import com.leyou.service.query.dto.BrandQueryDto;
-import com.leyou.service.query.dto.SelectBrandDto;
 import java.util.List;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,5 +94,14 @@ public class BrandController {
   public ResponseEntity<Void> deleteCategory(@PathVariable Long id) {
     application.deleteBrand(id);
     return ResponseEntity.ok().build();
+  }
+
+  @GetMapping("name")
+  public ResponseEntity<String> queryBrandName(Long id) {
+    String name = query.queryBrandName(id);
+    if (Strings.isNullOrEmpty(name)) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
+    return ResponseEntity.ok(name);
   }
 }
