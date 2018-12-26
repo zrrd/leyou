@@ -1,6 +1,5 @@
 package com.leyou.service.application.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 /**

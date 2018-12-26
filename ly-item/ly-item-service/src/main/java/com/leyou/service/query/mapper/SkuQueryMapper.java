@@ -1,5 +1,9 @@
 package com.leyou.service.query.mapper;
 
+import com.leyou.service.query.dto.SkuQueryDto;
+import java.util.List;
+import org.apache.ibatis.annotations.Select;
+
 /**
  * sku查询mapper.
  *
@@ -8,4 +12,7 @@ package com.leyou.service.query.mapper;
  */
 public interface SkuQueryMapper {
 
+  @Select("SELECT id,`enable`,title,images,price,own_spec,indexes,stock "
+      + "FROM tb_sku INNER JOIN tb_stock ON id = sku_id WHERE spu_id = #{spuId}")
+  List<SkuQueryDto> querySkuBySpuId(Long spuId);
 }

@@ -1,5 +1,8 @@
 package com.leyou.service.query.mapper;
 
+import com.leyou.service.query.dto.SpuDetailEditQueryDto;
+import org.apache.ibatis.annotations.Select;
+
 /**
  * SpuDetail查询mapper
  *
@@ -8,4 +11,12 @@ package com.leyou.service.query.mapper;
  */
 public interface SpuDetailQueryMapper {
 
+  /**
+   * 查询spu详情
+   *
+   * @param id spu id
+   * @return spu详情
+   */
+  @Select("SELECT * FROM tb_spu_detail WHERE spu_id = #{id}")
+  SpuDetailEditQueryDto querySpuDetailById(Long id);
 }
