@@ -1,8 +1,8 @@
 package com.leyou.search.pojo;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
@@ -57,7 +57,7 @@ public class Goods {
   /**
    * 价格
    */
-  private List<Long> price;
+  private Set<Long> price;
   /**
    * sku信息的json结构
    */

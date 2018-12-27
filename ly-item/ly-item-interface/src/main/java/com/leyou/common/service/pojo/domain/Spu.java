@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.leyou.common.service.enums.Saleable;
 import com.leyou.common.service.enums.Valid;
+import com.leyou.common.utils.EnumUtils;
+import java.sql.Timestamp;
 import java.util.Date;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -39,6 +41,21 @@ public class Spu extends Model<Spu> {
   Valid valid;
   Date createTime;
   Date lastUpdateTime;
+
+  public Spu(Long id, String title, String subTitle, Long cid1, Long cid2, Long cid3,
+      Long brandId, Boolean saleable, Boolean valid, Timestamp createTime, Timestamp lastUpdateTime) {
+    this.id = id;
+    this.title = title;
+    this.subTitle = subTitle;
+    this.cid1 = cid1;
+    this.cid2 = cid2;
+    this.cid3 = cid3;
+    this.brandId = brandId;
+    this.saleable = EnumUtils.get(Saleable.class,saleable);
+    this.valid = EnumUtils.get(Valid.class,valid);
+    this.createTime = createTime;
+    this.lastUpdateTime = lastUpdateTime;
+  }
 
   public static Spu newInstForSave(Long brandId, Long cid1, Long cid2, Long cid3, String title,
       String subTitle) {

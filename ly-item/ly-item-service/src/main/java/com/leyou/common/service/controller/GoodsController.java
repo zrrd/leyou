@@ -10,6 +10,7 @@ import com.leyou.common.service.application.StockApplication;
 import com.leyou.common.service.mvc.req.SaveGoodsReq;
 import com.leyou.common.service.mvc.req.SaveGoodsReq.SkusBean;
 import com.leyou.common.service.mvc.req.SpuQueryPageReq;
+import com.leyou.common.service.pojo.domain.Spu;
 import com.leyou.common.service.pojo.dto.application.SaveSkuDto;
 import com.leyou.common.service.pojo.dto.application.SaveSpuDetailDto;
 import com.leyou.common.service.pojo.dto.application.SaveSpuDto;
@@ -28,6 +29,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -63,14 +65,15 @@ public class GoodsController {
    * 分页查询spu.
    */
   @GetMapping("spu/page")
-  public ResponseEntity<PageResult> querySpuByPage(SpuQueryPageReq req) {
+  public ResponseEntity<PageResult<SpuQueryDto>> querySpuByPage(SpuQueryPageReq req) {
     IPage<SpuQueryDto> page = goodsQuery
         .querySpuByPage(req.getPage(), req.getKey(), req.getSaleable());
     return ResponseEntity.ok(PageResult.getPageResult(page));
   }
 
+
   /**
-   * 保存商品信息.
+   * 保存商品信息
    */
   @PostMapping("goods")
   @Transactional(rollbackFor = Throwable.class)
@@ -100,13 +103,31 @@ public class GoodsController {
     return ResponseEntity.status(HttpStatus.CREATED).build();
   }
 
+  /**
+   * 根据spuId 查找 spu详情
+   */
   @GetMapping("spu/detail/{id}")
   public ResponseEntity<SpuDetailEditQueryDto> querySpuDetailById(@PathVariable("id") Long id) {
     return ResponseEntity.ok(goodsQuery.querySpuDetail(id));
   }
 
+  /**
+   * 根据spuId 查找sku列表
+   */
   @GetMapping("sku/list")
   public ResponseEntity<List<SkuQueryDto>> querySkuBySpuId(Long id) {
     return ResponseEntity.ok(goodsQuery.querySkuBySpuId(id));
+  }
+
+  /**
+   * 根据id查询spu
+   */
+  @GetMapping("spu/{id}")
+  public ResponseEntity<Spu> querySpuById(@PathVariable("id") Long id) {
+    Spu spu = goodsQuery.querySpuById(id);
+    if (spu == null) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
+    return ResponseEntity.ok(spu);
   }
 }

@@ -1,15 +1,13 @@
 package com.leyou.search.client;
 
-import com.leyou.common.service.api.CategoryApi;
+import com.leyou.common.service.api.GoodsApi;
 import org.springframework.cloud.openfeign.FeignClient;
 
 /**
- * 远程调用
- *
  * @author shaoyijiong
- * @date 2018/12/26
+ * @date 2018/12/27
  */
 @FeignClient("item-service")
-public interface CategoryClient extends CategoryApi {
+public interface GoodsClient extends GoodsApi {
 
 }

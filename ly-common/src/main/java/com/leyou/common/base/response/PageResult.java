@@ -2,8 +2,11 @@ package com.leyou.common.base.response;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import java.util.List;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.val;
 
 /**
  * 分页结果.
@@ -13,6 +16,7 @@ import lombok.Data;
  */
 @Data
 @AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class PageResult<T> {
 
   /**
@@ -28,18 +32,11 @@ public class PageResult<T> {
    */
   private List<T> items;
 
-  private PageResult() {
-  }
-
 
   /**
    * 分页助手.
    */
-  public static PageResult getPageResult(IPage page) {
-    PageResult pageResult = new PageResult<>();
-    pageResult.items = page.getRecords();
-    pageResult.total = page.getTotal();
-    pageResult.totalPage = page.getPages();
-    return pageResult;
+  public static <T> PageResult<T> getPageResult(IPage<T> page) {
+    return new PageResult<>(page.getTotal(), page.getPages(), page.getRecords());
   }
 }

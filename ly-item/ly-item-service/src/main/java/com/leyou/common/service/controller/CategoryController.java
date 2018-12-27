@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -94,4 +95,15 @@ public class CategoryController {
     return ResponseEntity.ok(list);
   }
 
+  /**
+   * 根据类目id查找类目名
+   */
+  @GetMapping("names")
+  public ResponseEntity<List<String>> queryNameByIds(@RequestParam("ids") List<Long> ids) {
+    List<String> list = query.queryCategoryName(ids);
+    if (list == null || list.size() < 1) {
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+    return ResponseEntity.ok(list);
+  }
 }

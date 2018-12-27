@@ -33,4 +33,8 @@ public class CategoryQuery {
   public List<CategoryQueryDto> queryCategoryByBid(Long bid) {
     return mapper.queryCategoryByBid(bid);
   }
+
+  public List<String> queryCategoryName(List<Long> ids) {
+    return mapper.queryCategoryNames(ids);
+  }
 }

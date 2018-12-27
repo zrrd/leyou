@@ -5,6 +5,9 @@ spring:
     elasticsearch:
       cluster-name: elasticsearch
       cluster-nodes: 47.99.73.15:9300
+  #防止Feign同名出错
+  main:
+    allow-bean-definition-overriding: true
 
 eureka:
   client:

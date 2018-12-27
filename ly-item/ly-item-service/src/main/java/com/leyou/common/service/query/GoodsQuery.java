@@ -3,6 +3,8 @@ package com.leyou.common.service.query;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.base.Strings;
+import com.leyou.common.service.pojo.domain.Sku;
+import com.leyou.common.service.pojo.domain.Spu;
 import com.leyou.common.service.pojo.dto.query.SkuQueryDto;
 import com.leyou.common.service.pojo.dto.query.SpuDetailEditQueryDto;
 import com.leyou.common.service.pojo.dto.query.SpuQueryDto;
@@ -28,7 +30,7 @@ public class GoodsQuery {
 
   private final SpuQueryMapper spuMapper;
 
-  @SuppressWarnings({"CheckStyle", "SpringJavaInjectionPointsAutowiringInspection"})
+  @SuppressWarnings({"SpringJavaInjectionPointsAutowiringInspection", "CheckStyle"})
   @Autowired
   public GoodsQuery(SpuQueryMapper spuMapper, SkuQueryMapper skuQueryMapper,
       SpuDetailQueryMapper spuDetailQueryMapper) {
@@ -48,5 +50,9 @@ public class GoodsQuery {
 
   public List<SkuQueryDto> querySkuBySpuId(Long spuId) {
     return skuQueryMapper.querySkuBySpuId(spuId);
+  }
+
+  public Spu querySpuById(Long id) {
+    return spuMapper.selectById(id);
   }
 }
