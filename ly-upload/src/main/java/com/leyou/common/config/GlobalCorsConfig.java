@@ -12,7 +12,6 @@ import org.springframework.web.filter.CorsFilter;
  * @author shaoyijiong
  * @date 2018/11/28
  */
-@SuppressWarnings("ALL")
 @Configuration
 public class GlobalCorsConfig {
 
