@@ -21,6 +21,7 @@ zuul:
   retryable: true
   routes:
     item-service: /item/**
+    search-service: /search/**
   ignored-services:
     - upload-service
 ---

@@ -3,6 +3,7 @@ package com.leyou.search.pojo;
 import java.util.Date;
 import java.util.Map;
 import java.util.Set;
+import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
@@ -15,6 +16,7 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
  * @author shaoyijiong
  * @date 2018/12/25
  */
+@Builder
 @Data
 @Document(indexName = "goods", type = "docs", shards = 1, replicas = 0)
 public class Goods {
