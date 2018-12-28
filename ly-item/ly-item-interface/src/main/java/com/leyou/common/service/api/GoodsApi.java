@@ -1,10 +1,9 @@
 package com.leyou.common.service.api;
 
 import com.leyou.common.base.response.PageResult;
-import com.leyou.common.service.mvc.req.SpuQueryPageReq;
-import com.leyou.common.service.pojo.domain.Spu;
 import com.leyou.common.service.pojo.dto.query.SkuQueryDto;
 import com.leyou.common.service.pojo.dto.query.SpuDetailEditQueryDto;
+import com.leyou.common.service.pojo.dto.query.SpuDto;
 import com.leyou.common.service.pojo.dto.query.SpuQueryDto;
 import java.util.List;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -63,5 +62,5 @@ public interface GoodsApi {
    * @return spu
    */
   @RequestMapping(value = "spu/{id}", method = RequestMethod.GET)
-  Spu querySpuById(@PathVariable("id") Long id);
+  SpuDto querySpuById(@PathVariable("id") Long id);
 }

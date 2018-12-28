@@ -54,6 +54,9 @@ public class LeyouSearchApplicationTests {
     template.putMapping(Goods.class);
   }
 
+  /**
+   * 将数据插入索引库
+   */
   @Test
   public void insertIndex() {
     PageResult<SpuQueryDto> spuPage = goodsClient.querySpuByPage(null, true, 1, 1000, null, null);

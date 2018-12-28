@@ -20,7 +20,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter(AccessLevel.PRIVATE)
-@AllArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @TableName("tb_spu")
 public class Spu extends Model<Spu> {
 
@@ -42,8 +42,13 @@ public class Spu extends Model<Spu> {
   Date createTime;
   Date lastUpdateTime;
 
+  /**
+   * 数据客构造
+   */
+  @SuppressWarnings("unused")
   public Spu(Long id, String title, String subTitle, Long cid1, Long cid2, Long cid3,
-      Long brandId, Boolean saleable, Boolean valid, Timestamp createTime, Timestamp lastUpdateTime) {
+      Long brandId, Boolean saleable, Boolean valid, Timestamp createTime,
+      Timestamp lastUpdateTime) {
     this.id = id;
     this.title = title;
     this.subTitle = subTitle;
@@ -51,8 +56,8 @@ public class Spu extends Model<Spu> {
     this.cid2 = cid2;
     this.cid3 = cid3;
     this.brandId = brandId;
-    this.saleable = EnumUtils.get(Saleable.class,saleable);
-    this.valid = EnumUtils.get(Valid.class,valid);
+    this.saleable = EnumUtils.get(Saleable.class, saleable);
+    this.valid = EnumUtils.get(Valid.class, valid);
     this.createTime = createTime;
     this.lastUpdateTime = lastUpdateTime;
   }

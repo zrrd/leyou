@@ -4,8 +4,10 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.leyou.common.service.pojo.domain.Spu;
+import com.leyou.common.service.pojo.dto.query.SpuDto;
 import com.leyou.common.service.pojo.dto.query.SpuQueryDto;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 /**
  * spu查询mapper.
@@ -26,4 +28,12 @@ public interface SpuQueryMapper extends BaseMapper<Spu> {
   IPage<SpuQueryDto> querySpuByPage(Page page, @Param("key") String key,
       @Param("saleable") Boolean saleable);
 
+  /**
+   * 查询spu
+   *
+   * @param id spu id
+   * @return spu实体
+   */
+  @Select("SELECT * FROM tb_spu WHERE id = #{id}")
+  SpuDto querySpuById(Long id);
 }

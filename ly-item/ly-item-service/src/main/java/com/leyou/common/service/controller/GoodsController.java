@@ -10,13 +10,13 @@ import com.leyou.common.service.application.StockApplication;
 import com.leyou.common.service.mvc.req.SaveGoodsReq;
 import com.leyou.common.service.mvc.req.SaveGoodsReq.SkusBean;
 import com.leyou.common.service.mvc.req.SpuQueryPageReq;
-import com.leyou.common.service.pojo.domain.Spu;
 import com.leyou.common.service.pojo.dto.application.SaveSkuDto;
 import com.leyou.common.service.pojo.dto.application.SaveSpuDetailDto;
 import com.leyou.common.service.pojo.dto.application.SaveSpuDto;
 import com.leyou.common.service.pojo.dto.application.SaveStockDto;
 import com.leyou.common.service.pojo.dto.query.SkuQueryDto;
 import com.leyou.common.service.pojo.dto.query.SpuDetailEditQueryDto;
+import com.leyou.common.service.pojo.dto.query.SpuDto;
 import com.leyou.common.service.pojo.dto.query.SpuQueryDto;
 import com.leyou.common.service.query.GoodsQuery;
 import java.util.List;
@@ -29,7 +29,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -123,8 +122,8 @@ public class GoodsController {
    * 根据id查询spu
    */
   @GetMapping("spu/{id}")
-  public ResponseEntity<Spu> querySpuById(@PathVariable("id") Long id) {
-    Spu spu = goodsQuery.querySpuById(id);
+  public ResponseEntity<SpuDto> querySpuById(@PathVariable("id") Long id) {
+    SpuDto spu = goodsQuery.querySpuById(id);
     if (spu == null) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }

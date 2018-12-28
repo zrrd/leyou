@@ -3,10 +3,9 @@ package com.leyou.common.service.query;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.base.Strings;
-import com.leyou.common.service.pojo.domain.Sku;
-import com.leyou.common.service.pojo.domain.Spu;
 import com.leyou.common.service.pojo.dto.query.SkuQueryDto;
 import com.leyou.common.service.pojo.dto.query.SpuDetailEditQueryDto;
+import com.leyou.common.service.pojo.dto.query.SpuDto;
 import com.leyou.common.service.pojo.dto.query.SpuQueryDto;
 import com.leyou.common.service.query.mapper.SkuQueryMapper;
 import com.leyou.common.service.query.mapper.SpuDetailQueryMapper;
@@ -24,19 +23,19 @@ import org.springframework.stereotype.Service;
 @Service
 public class GoodsQuery {
 
-  private final SkuQueryMapper skuQueryMapper;
+  private final SkuQueryMapper skuMapper;
 
-  private final SpuDetailQueryMapper spuDetailQueryMapper;
+  private final SpuDetailQueryMapper spuDetailMapper;
 
   private final SpuQueryMapper spuMapper;
 
   @SuppressWarnings({"SpringJavaInjectionPointsAutowiringInspection", "CheckStyle"})
   @Autowired
-  public GoodsQuery(SpuQueryMapper spuMapper, SkuQueryMapper skuQueryMapper,
-      SpuDetailQueryMapper spuDetailQueryMapper) {
+  public GoodsQuery(SpuQueryMapper spuMapper, SkuQueryMapper skuMapper,
+      SpuDetailQueryMapper spuDetailMapper) {
     this.spuMapper = spuMapper;
-    this.skuQueryMapper = skuQueryMapper;
-    this.spuDetailQueryMapper = spuDetailQueryMapper;
+    this.skuMapper = skuMapper;
+    this.spuDetailMapper = spuDetailMapper;
   }
 
   public IPage<SpuQueryDto> querySpuByPage(Page page, String key, Boolean saleable) {
@@ -45,14 +44,14 @@ public class GoodsQuery {
   }
 
   public SpuDetailEditQueryDto querySpuDetail(Long id) {
-    return spuDetailQueryMapper.querySpuDetailById(id);
+    return spuDetailMapper.querySpuDetailById(id);
   }
 
   public List<SkuQueryDto> querySkuBySpuId(Long spuId) {
-    return skuQueryMapper.querySkuBySpuId(spuId);
+    return skuMapper.querySkuBySpuId(spuId);
   }
 
-  public Spu querySpuById(Long id) {
-    return spuMapper.selectById(id);
+  public SpuDto querySpuById(Long id) {
+    return spuMapper.querySpuById(id);
   }
 }

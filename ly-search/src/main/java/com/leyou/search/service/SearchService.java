@@ -8,9 +8,9 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
-import com.leyou.common.service.pojo.domain.Spu;
 import com.leyou.common.service.pojo.dto.query.SkuQueryDto;
 import com.leyou.common.service.pojo.dto.query.SpuDetailEditQueryDto;
+import com.leyou.common.service.pojo.dto.query.SpuDto;
 import com.leyou.search.client.BrandClient;
 import com.leyou.search.client.CategoryClient;
 import com.leyou.search.client.GoodsClient;
@@ -55,8 +55,8 @@ public class SearchService {
   }
 
   @SuppressWarnings("CheckStyle")
-  public  Goods buildGoods(Long id)  {
-    Spu spu = goodsClient.querySpuById(id);
+  public Goods buildGoods(Long id) {
+    SpuDto spu = goodsClient.querySpuById(id);
 
     StringBuilder all = new StringBuilder();
     all.append(spu.getTitle());
@@ -68,7 +68,7 @@ public class SearchService {
     Joiner joiner = Joiner.on(" ").skipNulls();
     all.append(joiner.join(categoryNames));
 
-    String brandName = brandClient.queryBrandName(id);
+    String brandName = brandClient.queryBrandName(spu.getBrandId());
     all.append(brandName);
 
     //查询sku
