@@ -50,7 +50,7 @@ public class BrandController {
    */
   @GetMapping("page")
   public ResponseEntity<PageResult> queryBrandByPage(BrandQueryPageReq req) {
-    IPage<BrandQueryDto> page = query.queryBrandByPage(req.getPage(), req.getKey());
+    IPage<BrandQueryDto> page = query.queryBrandByPage(req.getPages(), req.getKey());
     if (Iterables.isEmpty(page.getRecords())) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     }

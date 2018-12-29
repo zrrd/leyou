@@ -66,7 +66,7 @@ public class GoodsController {
   @GetMapping("spu/page")
   public ResponseEntity<PageResult<SpuQueryDto>> querySpuByPage(SpuQueryPageReq req) {
     IPage<SpuQueryDto> page = goodsQuery
-        .querySpuByPage(req.getPage(), req.getKey(), req.getSaleable());
+        .querySpuByPage(req.getPages(), req.getKey(), req.getSaleable());
     return ResponseEntity.ok(PageResult.getPageResult(page));
   }
 

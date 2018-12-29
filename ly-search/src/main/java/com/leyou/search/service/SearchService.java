@@ -9,6 +9,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
+import com.leyou.common.base.response.PageResult;
 import com.leyou.common.service.pojo.dto.query.SkuQueryDto;
 import com.leyou.common.service.pojo.dto.query.SpuDetailEditQueryDto;
 import com.leyou.common.service.pojo.dto.query.SpuDto;
@@ -16,14 +17,21 @@ import com.leyou.search.client.BrandClient;
 import com.leyou.search.client.CategoryClient;
 import com.leyou.search.client.GoodsClient;
 import com.leyou.search.client.SpecClient;
+import com.leyou.search.controller.req.SearchPageReq;
 import com.leyou.search.pojo.Goods;
 import com.leyou.search.pojo.Specification;
+import com.leyou.search.repository.GoodsRepository;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Consumer;
+import org.elasticsearch.index.query.QueryBuilders;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.elasticsearch.core.query.FetchSourceFilter;
+import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.stereotype.Service;
 
 /**
@@ -34,6 +42,8 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class SearchService {
+
+  private final GoodsRepository goodsRepository;
 
   private final BrandClient brandClient;
   private final CategoryClient categoryClient;
@@ -47,11 +57,12 @@ public class SearchService {
    */
   @Autowired
   public SearchService(BrandClient brandClient, CategoryClient categoryClient,
-      GoodsClient goodsClient, SpecClient specClient) {
+      GoodsClient goodsClient, SpecClient specClient, GoodsRepository goodsRepository) {
     this.brandClient = brandClient;
     this.categoryClient = categoryClient;
     this.goodsClient = goodsClient;
     this.specClient = specClient;
+    this.goodsRepository = goodsRepository;
   }
 
   /**
@@ -70,10 +81,20 @@ public class SearchService {
     String sku = getSku(id, priceSet);
 
     //得到规格参数
-    return Goods.builder().id(spu.getId()).brandId(spu.getBrandId())
-        .cid1(spu.getCid1()).cid2(spu.getCid2()).cid3(spu.getCid3())
-        .createTime(spu.getCreateTime()).subTitle(spu.getSubTitle())
-        .all(all).price(priceSet).skus(sku).specs(getSpec(id)).build();
+    Goods goods = new Goods();
+    goods.setId(spu.getId());
+    goods.setBrandId(spu.getBrandId());
+    goods.setCid1(spu.getCid1());
+    goods.setCid2(spu.getCid2());
+    goods.setCid3(spu.getCid3());
+    goods.setCreateTime(spu.getCreateTime());
+    goods.setSubTitle(spu.getSubTitle());
+    goods.setAll(all);
+    goods.setPrice(priceSet);
+    goods.setSkus(sku);
+    goods.setSpecs(getSpec(id));
+
+    return goods;
   }
 
   /**
@@ -151,5 +172,28 @@ public class SearchService {
     String brandName = brandClient.queryBrandName(brandId);
     all.append(brandName);
     return all.toString();
+  }
+
+  /**
+   * 搜索
+   */
+  public PageResult<Goods> search(SearchPageReq req) {
+    int page = req.getPage();
+    int size = SearchPageReq.DEFAULT_ROWS;
+    //1.创建查询过滤器
+    NativeSearchQueryBuilder queryBuilder = new NativeSearchQueryBuilder();
+    //2.分页
+    queryBuilder.withPageable(PageRequest.of(page, size));
+    //3.过滤
+    queryBuilder.withQuery(QueryBuilders.matchQuery("all", req.getKey()));
+    //4. 结果过滤
+    queryBuilder
+        .withSourceFilter(new FetchSourceFilter(new String[]{"id", "subTitle", "skus"}, null));
+    Page<Goods> goods = goodsRepository.search(queryBuilder.build());
+
+    int totalPages = goods.getTotalPages();
+    Long total = goods.getTotalElements();
+    List<Goods> goodsList = goods.getContent();
+    return new PageResult<>(total, (long) totalPages, goodsList);
   }
 }

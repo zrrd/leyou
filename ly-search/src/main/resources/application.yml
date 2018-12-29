@@ -1,6 +1,8 @@
 server:
   port: 8083
 spring:
+  application:
+    name: search-service
   data:
     elasticsearch:
       cluster-name: elasticsearch
@@ -8,7 +10,6 @@ spring:
   #防止Feign同名出错
   main:
     allow-bean-definition-overriding: true
-
 eureka:
   client:
     service-url:

@@ -14,13 +14,13 @@ import lombok.Data;
 public class PageReq {
 
   /**
-   * 当前页.
+   * 当前页 默认为第一页
    */
-  Integer page;
+  Integer page = 1;
   /**
-   * 每页大小.
+   * 每页大小 默认为10条
    */
-  Integer rows;
+  Integer rows = 10;
   /**
    * 排序字段.
    */
@@ -33,7 +33,7 @@ public class PageReq {
   /**
    * 转换page类型.
    */
-  public Page getPage() {
+  public Page getPages() {
     Page page = new Page(this.page, rows);
     if (!Strings.isNullOrEmpty(sortBy)) {
       if (desc) {
