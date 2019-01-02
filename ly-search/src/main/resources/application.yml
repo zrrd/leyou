@@ -7,6 +7,9 @@ spring:
     elasticsearch:
       cluster-name: elasticsearch
       cluster-nodes: 47.99.73.15:9300
+  #不允许有空值  空置不返回
+  jackson:
+    default-property-inclusion: non_null
   #防止Feign同名出错
   main:
     allow-bean-definition-overriding: true

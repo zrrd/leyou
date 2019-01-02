@@ -27,6 +27,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Consumer;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.sort.SortBuilder;
+import org.elasticsearch.search.sort.SortBuilders;
+import org.elasticsearch.search.sort.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -178,7 +181,8 @@ public class SearchService {
    * 搜索
    */
   public PageResult<Goods> search(SearchPageReq req) {
-    int page = req.getPage();
+    // es 分页从第0页开始
+    int page = req.getPage() - 1;
     int size = SearchPageReq.DEFAULT_ROWS;
     //1.创建查询过滤器
     NativeSearchQueryBuilder queryBuilder = new NativeSearchQueryBuilder();
@@ -186,9 +190,17 @@ public class SearchService {
     queryBuilder.withPageable(PageRequest.of(page, size));
     //3.过滤
     queryBuilder.withQuery(QueryBuilders.matchQuery("all", req.getKey()));
-    //4. 结果过滤
+    //4. 结果过滤  只要这几个字段
     queryBuilder
         .withSourceFilter(new FetchSourceFilter(new String[]{"id", "subTitle", "skus"}, null));
+    //5. 排序
+    String sortBy = req.getSortBy();
+    Boolean desc = req.getDesc();
+    if (!Strings.isNullOrEmpty(sortBy)) {
+      queryBuilder
+          .withSort(SortBuilders.fieldSort(sortBy).order(desc ? SortOrder.DESC : SortOrder.ASC));
+    }
+    //6. 查询
     Page<Goods> goods = goodsRepository.search(queryBuilder.build());
 
     int totalPages = goods.getTotalPages();

@@ -8,6 +8,7 @@ import java.util.Date;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
@@ -20,6 +21,7 @@ import lombok.Setter;
 @Setter(AccessLevel.PRIVATE)
 @AllArgsConstructor
 @TableName("tb_sku")
+@NoArgsConstructor
 public class Sku extends Model<Sku> {
 
   Long id;
@@ -58,5 +60,9 @@ public class Sku extends Model<Sku> {
       String indexes, String ownSpec, String title) {
     return new Sku(null, spuId, title, images, price, indexes, ownSpec,
         EnumUtils.get(SkuEnable.class, enable), new Date(), new Date());
+  }
+
+  public void updateImage(String images) {
+    this.images = images;
   }
 }

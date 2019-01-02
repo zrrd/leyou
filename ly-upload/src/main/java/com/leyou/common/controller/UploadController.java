@@ -27,7 +27,7 @@ public class UploadController {
   }
 
   /**
-   * 上次图片文件.
+   * 上传图片文件.
    */
   @RequestMapping("image")
   public ResponseEntity<String> uploadImage(@RequestParam("file") MultipartFile file) {
