@@ -22,7 +22,7 @@ import lombok.Setter;
 @Getter
 @Setter(AccessLevel.PRIVATE)
 @TableName("tb_brand")
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 public class Brand extends Model<Brand> {
 

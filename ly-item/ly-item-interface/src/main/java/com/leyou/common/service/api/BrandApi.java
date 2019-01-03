@@ -1,5 +1,8 @@
 package com.leyou.common.service.api;
 
+import com.leyou.common.service.pojo.domain.Brand;
+import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,6 +23,9 @@ public interface BrandApi {
    * @param id 品牌id
    * @return 品牌名
    */
-  @RequestMapping(value = "name",method = RequestMethod.GET)
+  @RequestMapping(value = "name", method = RequestMethod.GET)
   String queryBrandName(@RequestParam("id") Long id);
+
+  @RequestMapping(value = "list", method = RequestMethod.GET)
+  List<Brand> queryBrandByIds(@RequestParam("ids") List<Long> ids);
 }

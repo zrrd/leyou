@@ -1,8 +1,10 @@
 package com.leyou.common.service.query;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.base.Strings;
+import com.leyou.common.service.pojo.domain.Brand;
 import com.leyou.common.service.pojo.dto.query.BrandQueryDto;
 import com.leyou.common.service.pojo.dto.query.SelectBrandDto;
 import com.leyou.common.service.query.mapper.BrandQueryMapper;
@@ -43,5 +45,11 @@ public class BrandQuery {
 
   public String queryBrandName(Long id) {
     return mapper.queryBrandName(id);
+  }
+
+  public List<Brand> queryBrandByIds(List<Long> ids) {
+    QueryWrapper<Brand> queryWrapper = new QueryWrapper<>();
+    queryWrapper.in("id", ids);
+    return new Brand().selectList(queryWrapper);
   }
 }

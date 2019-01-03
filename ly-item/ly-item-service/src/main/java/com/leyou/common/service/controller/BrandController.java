@@ -8,6 +8,7 @@ import com.leyou.common.service.application.BrandApplication;
 import com.leyou.common.service.mvc.req.BrandQueryPageReq;
 import com.leyou.common.service.mvc.req.EditCategoryReq;
 import com.leyou.common.service.mvc.req.SaveBrandReq;
+import com.leyou.common.service.pojo.domain.Brand;
 import com.leyou.common.service.pojo.dto.application.EditBrandDto;
 import com.leyou.common.service.pojo.dto.application.SaveBrandDto;
 import com.leyou.common.service.pojo.dto.query.BrandQueryDto;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -106,5 +108,14 @@ public class BrandController {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
     return ResponseEntity.ok(name);
+  }
+
+  @GetMapping("list")
+  ResponseEntity<List<Brand>> queryBrandByIds(@RequestParam("ids") List<Long> ids) {
+    List<Brand> brands = query.queryBrandByIds(ids);
+    if (Iterables.isEmpty(brands)) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
+    return ResponseEntity.ok(brands);
   }
 }
