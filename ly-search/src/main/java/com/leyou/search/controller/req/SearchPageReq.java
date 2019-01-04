@@ -1,6 +1,7 @@
 package com.leyou.search.controller.req;
 
 import com.leyou.common.base.request.PageReq;
+import java.util.Map;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -14,4 +15,5 @@ public class SearchPageReq extends PageReq {
 
   public static final int DEFAULT_ROWS = 20;
   private String key;
+  private Map<String, String> filter;
 }

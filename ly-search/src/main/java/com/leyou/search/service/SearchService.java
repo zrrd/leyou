@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.elasticsearch.action.search.SearchResponse;
-import org.elasticsearch.index.query.MatchQueryBuilder;
+import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.Operator;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
@@ -90,8 +90,7 @@ public class SearchService {
     //1. 构造查询条件
     NativeSearchQueryBuilder queryBuilder = new NativeSearchQueryBuilder();
     //1.1 基本查询
-    MatchQueryBuilder basicQuery = QueryBuilders.matchQuery("all", req.getKey())
-        .operator(Operator.AND);
+    QueryBuilder basicQuery = buildBasicQueryWithFilter(req);
     queryBuilder.withQuery(basicQuery);
     // 通过sourceFilter设置返回的结果字段,我们只需要id、skus、subTitle
     queryBuilder
@@ -124,6 +123,40 @@ public class SearchService {
         goods.getContent(), categories, brands, specs);
   }
 
+  /**
+   * 构建基本查询条件
+   */
+  private QueryBuilder buildBasicQueryWithFilter(SearchPageReq request) {
+    BoolQueryBuilder queryBuilder = QueryBuilders.boolQuery();
+    // 基本查询条件
+    queryBuilder.must(QueryBuilders.matchQuery("all", request.getKey()).operator(Operator.AND));
+    // 过滤条件构建器
+    BoolQueryBuilder filterQueryBuilder = QueryBuilders.boolQuery();
+    // 整理过滤条件
+    Map<String, String> filter = request.getFilter();
+    for (Map.Entry<String, String> entry : filter.entrySet()) {
+      String key = entry.getKey();
+      String value = entry.getValue();
+
+      if (value.contains("-")) {
+        String[] split = value.split("-");
+        filterQueryBuilder.must(
+            QueryBuilders.rangeQuery("specs." + key).gt(Long.valueOf(split[0])).lt(Long.valueOf(split[1])));
+      } else {
+        // 商品分类和品牌要特殊处理
+        if (!"cid3".equals(key) && !"brandId".equals(key)) {
+          key = "specs." + key + ".keyword";
+        }
+        // 字符串类型，进行term查询
+        filterQueryBuilder.must(QueryBuilders.termQuery(key, value));
+      }
+
+
+    }
+    // 添加过滤条件
+    queryBuilder.filter(filterQueryBuilder);
+    return queryBuilder;
+  }
 
   /**
    * 分页排序
