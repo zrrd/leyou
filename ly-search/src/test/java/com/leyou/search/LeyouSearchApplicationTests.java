@@ -2,12 +2,14 @@ package com.leyou.search;
 
 import com.google.common.collect.ImmutableList;
 import com.leyou.common.base.response.PageResult;
-import com.leyou.common.service.mvc.req.SpuQueryPageReq;
 import com.leyou.common.service.pojo.dto.query.SpuQueryDto;
 import com.leyou.search.client.CategoryClient;
 import com.leyou.search.client.GoodsClient;
+import com.leyou.search.controller.req.SearchPageReq;
 import com.leyou.search.pojo.Goods;
+import com.leyou.search.pojo.SearchResult;
 import com.leyou.search.repository.GoodsRepository;
+import com.leyou.search.service.BuildService;
 import com.leyou.search.service.SearchService;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,6 +31,8 @@ public class LeyouSearchApplicationTests {
   @Resource
   private GoodsClient goodsClient;
 
+  @Autowired
+  private BuildService buildService;
   @Autowired
   private GoodsRepository goodsRepository;
   @Autowired
@@ -62,10 +66,17 @@ public class LeyouSearchApplicationTests {
     PageResult<SpuQueryDto> spuPage = goodsClient.querySpuByPage(null, true, 1, 1000, null, null);
     List<Long> list = spuPage.getItems().stream().map(SpuQueryDto::getId)
         .collect(Collectors.toList());
-    List<Goods> goods = list.stream().map(a -> searchService.buildGoods(a))
+    List<Goods> goods = list.stream().map(a -> buildService.build(a))
         .collect(Collectors.toList());
-    goodsRepository.saveAll(goods);
+    buildService.insertIndex(goods);
 
+  }
+
+  @Test
+  public void search() {
+    SearchPageReq req = new SearchPageReq();
+    req.setKey("手机");
+    SearchResult search = searchService.search(req);
   }
 }
 
