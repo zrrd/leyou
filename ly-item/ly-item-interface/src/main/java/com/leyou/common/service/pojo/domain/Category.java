@@ -54,4 +54,11 @@ public class Category extends Model<Category> {
     return category;
   }
 
+  public Category(Long id) {
+    this.id = id;
+  }
+
+  public void findParent(Long id) {
+    this.id = id;
+  }
 }

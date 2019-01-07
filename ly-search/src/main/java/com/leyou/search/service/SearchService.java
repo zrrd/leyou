@@ -128,7 +128,7 @@ public class SearchService {
    */
   private QueryBuilder buildBasicQueryWithFilter(SearchPageReq request) {
     BoolQueryBuilder queryBuilder = QueryBuilders.boolQuery();
-    // 基本查询条件
+    // 基本查询条件 搜索字段
     queryBuilder.must(QueryBuilders.matchQuery("all", request.getKey()).operator(Operator.AND));
     // 过滤条件构建器
     BoolQueryBuilder filterQueryBuilder = QueryBuilders.boolQuery();
@@ -137,11 +137,13 @@ public class SearchService {
     for (Map.Entry<String, String> entry : filter.entrySet()) {
       String key = entry.getKey();
       String value = entry.getValue();
-
       if (value.contains("-")) {
+        //区间类型0-300
         String[] split = value.split("-");
+        //查询的时候添加数字的上下边界
         filterQueryBuilder.must(
-            QueryBuilders.rangeQuery("specs." + key).gt(Long.valueOf(split[0])).lt(Long.valueOf(split[1])));
+            QueryBuilders.rangeQuery("specs." + key).gt(Double.valueOf(split[0]))
+                .lt(Double.valueOf(split[1])).includeUpper(true).includeLower(false));
       } else {
         // 商品分类和品牌要特殊处理
         if (!"cid3".equals(key) && !"brandId".equals(key)) {

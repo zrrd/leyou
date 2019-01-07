@@ -3,6 +3,7 @@ package com.leyou.common.service.controller;
 import com.leyou.common.service.application.CategoryApplication;
 import com.leyou.common.service.mvc.req.EditCategoryReq;
 import com.leyou.common.service.mvc.req.SaveCategoryReq;
+import com.leyou.common.service.pojo.domain.Category;
 import com.leyou.common.service.pojo.dto.application.SaveCategoryDto;
 import com.leyou.common.service.pojo.dto.query.CategoryQueryDto;
 import com.leyou.common.service.query.CategoryQuery;
@@ -101,6 +102,18 @@ public class CategoryController {
   @GetMapping("names")
   public ResponseEntity<List<String>> queryNameByIds(@RequestParam("ids") List<Long> ids) {
     List<String> list = query.queryCategoryName(ids);
+    if (list == null || list.size() < 1) {
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+    return ResponseEntity.ok(list);
+  }
+
+  /**
+   * 根据3级分类id，查询1~3级的分类
+   */
+  @GetMapping("all/level")
+  public ResponseEntity<List<Category>> queryAllByCid3(@RequestParam("id") Long id) {
+    List<Category> list = query.queryAllByCid3(id);
     if (list == null || list.size() < 1) {
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
