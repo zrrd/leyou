@@ -10,6 +10,7 @@ import com.leyou.common.service.application.StockApplication;
 import com.leyou.common.service.mvc.req.SaveGoodsReq;
 import com.leyou.common.service.mvc.req.SaveGoodsReq.SkusBean;
 import com.leyou.common.service.mvc.req.SpuQueryPageReq;
+import com.leyou.common.service.pojo.domain.Spu;
 import com.leyou.common.service.pojo.dto.application.SaveSkuDto;
 import com.leyou.common.service.pojo.dto.application.SaveSpuDetailDto;
 import com.leyou.common.service.pojo.dto.application.SaveSpuDto;
