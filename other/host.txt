@@ -1,0 +1,4 @@
+# leyou
+127.0.0.1   manage.leyou.com
+127.0.0.1   api.leyou.com
+127.0.0.1   www.leyou.com

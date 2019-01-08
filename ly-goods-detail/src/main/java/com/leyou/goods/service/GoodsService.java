@@ -9,13 +9,19 @@ import com.leyou.common.service.pojo.dto.query.SpuDto;
 import com.leyou.goods.client.BrandClient;
 import com.leyou.goods.client.CategoryClient;
 import com.leyou.goods.client.GoodsClient;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
 
 /**
  * @author shaoyijiong
@@ -26,16 +32,18 @@ import org.springframework.stereotype.Service;
 @Service
 public class GoodsService {
 
+  private final TemplateEngine templateEngine;
   private final GoodsClient goodsClient;
   private final BrandClient brandClient;
   private final CategoryClient categoryClient;
 
   @Autowired
   public GoodsService(GoodsClient goodsClient, BrandClient brandClient,
-      CategoryClient categoryClient) {
+      CategoryClient categoryClient, TemplateEngine templateEngine) {
     this.goodsClient = goodsClient;
     this.brandClient = brandClient;
     this.categoryClient = categoryClient;
+    this.templateEngine = templateEngine;
   }
 
   public Map<String, Object> loadModel(Long spuId) {
@@ -65,5 +73,23 @@ public class GoodsService {
       log.error("查询商品分类出错，spuId：{}", spu.getId(), e);
     }
     return null;
+  }
+
+  /**
+   * 异步调用生成html任务
+   */
+  @Async
+  public void createHtml(Map<String, Object> map, Long spuId) {
+    //上下文
+    Context context = new Context();
+    context.setVariables(map);
+    //输出流
+    File file = new File("D:\\nginx-1.12.2\\html", spuId + ".html");
+    try (FileWriter writer = new FileWriter(file, false)) {
+      //生成html
+      templateEngine.process("item", context, writer);
+    } catch (IOException e) {
+      log.error("生成静态页异常", e);
+    }
   }
 }

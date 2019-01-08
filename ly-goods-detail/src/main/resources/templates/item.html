@@ -131,7 +131,7 @@
             <!--默认第一个预览-->
             <div id="preview" class="spec-preview">
 							<span class="jqzoom">
-								<img jqimg="/img/_/b1.png" src="/img/_/s1.png" width="400px" height="400px"/>
+								 <img :jqimg="images[0]" :src="images[0]" width="400px" height="400px"/>
 							</span>
             </div>
             <!--下方的缩略图-->
@@ -140,23 +140,8 @@
               <!--左右按钮-->
               <div class="items">
                 <ul>
-                  <li><img src="/img/_/s1.png" bimg="/img/_/b1.png" onmousemove="preview(this)"/>
-                  </li>
-                  <li><img src="/img/_/s2.png" bimg="/img/_/b2.png" onmousemove="preview(this)"/>
-                  </li>
-                  <li><img src="/img/_/s3.png" bimg="/img/_/b3.png" onmousemove="preview(this)"/>
-                  </li>
-                  <li><img src="/img/_/s1.png" bimg="/img/_/b1.png" onmousemove="preview(this)"/>
-                  </li>
-                  <li><img src="/img/_/s2.png" bimg="/img/_/b2.png" onmousemove="preview(this)"/>
-                  </li>
-                  <li><img src="/img/_/s3.png" bimg="/img/_/b3.png" onmousemove="preview(this)"/>
-                  </li>
-                  <li><img src="/img/_/s1.png" bimg="/img/_/b1.png" onmousemove="preview(this)"/>
-                  </li>
-                  <li><img src="/img/_/s2.png" bimg="/img/_/b2.png" onmousemove="preview(this)"/>
-                  </li>
-                  <li><img src="/img/_/s3.png" bimg="/img/_/b3.png" onmousemove="preview(this)"/>
+                  <li v-for="(image, i) in images" :key="i">
+                    <img :src="image" :bimg="image" onmousemove="preview(this)" />
                   </li>
                 </ul>
               </div>
@@ -173,7 +158,7 @@
             <div class="summary-wrap">
               <div class="fl title"><i>价　　格</i></div>
               <div class="fl price">
-                <i>¥</i><em>5299.00</em><span>降价通知</span>
+                <i>¥</i><em>{{ly.formatPrice(sku.price)}}</em><span>降价通知</span>
               </div>
               <div class="fr remark"><i>累计评价</i><em>612188</em></div>
             </div>
@@ -208,14 +193,15 @@
           </div>
           <div class="clearfix choose">
             <div id="specification" class="summary-wrap clearfix">
-              <dl v-for="(v,k,i) in specialSpec">
+              <dl v-for="(v,k,i) in specialSpec" :key="i">
                 <dt>
                   <div class="fl title">
-                    <i>{{k}} {{i}}</i>
+                    <i>{{k}}</i>
                   </div>
                 </dt>
                 <dd v-for="(str,j) in v" :key="j">
-                  <a href="javascript:;" class="selected">
+                  <a href="javascript:;" :class="{selected : specIndex[i] === j}"
+                     v-on:click="changeSku(i,j)">
                     {{str}}<span title="点击取消选择">&nbsp;</span>
                   </a>
                 </dd>
@@ -458,73 +444,30 @@
             <div class="tab-content tab-wraped">
               <div id="one" class="tab-pane active">
                 <ul class="goods-intro-list unstyled" style="list-style: none;">
-                  <li>分辨率：1920*1080(FHD)</li>
-                  <li>后置摄像头：1200万像素</li>
-                  <li>前置摄像头：500万像素</li>
-                  <li>核 数：其他</li>
-                  <li>频 率：以官网信息为准</li>
-                  <li>品牌： Apple</li>
-                  <li>商品名称：APPLEiPhone 6s Plus</li>
-                  <li>商品编号：1861098</li>
-                  <li>商品毛重：0.51kg</li>
-                  <li>商品产地：中国大陆</li>
-                  <li>热点：指纹识别，Apple Pay，金属机身，拍照神器</li>
-                  <li>系统：苹果（IOS）</li>
-                  <li>像素：1000-1600万</li>
-                  <li>机身内存：64GB</li>
+                  <div v-for="group in groups">
+                    <li v-for="p in group.params">{{p.k}}：{{p.v + (p.unit || '')}}</li>
+                  </div>
                 </ul>
                 <!--商品详情-->
-                <div class="intro-detail">
-                  <img src="/img/_/intro01.png"/>
-                  <img src="/img/_/intro02.png"/>
-                  <img src="/img/_/intro03.png"/>
+                <div class="intro-detail" th:utext="${spuDetail.description}">
                 </div>
               </div>
               <div id="two" class="tab-pane">
                 <div class="Ptable">
-                  <div class="Ptable-item">
-                    <h3>主体</h3>
+                  <div class="Ptable-item" v-for="group in groups">
+                    <h3>{{group.group}}</h3>
                     <dl>
-                      <dt>品牌</dt>
-                      <dd>华为（HUAWEI）</dd>
-                      <dt>型号</dt>
-                      <dd>CLT-AL00</dd>
-                      <dt>入网型号</dt>
-                      <dd>CLT-AL00</dd>
-                      <dt>上市年份</dt>
-                      <dd>2018年</dd>
-                      <dt>上市月份</dt>
-                      <dd>4月</dd>
+                      <div v-for="p in group.params">
+                        <dt>{{p.k}}</dt>
+                        <dd>{{p.v + (p.unit || '')}}</dd>
+                      </div>
                     </dl>
                   </div>
-                  <div class="Ptable-item">
-                    <h3>基本信息</h3>
-                    <dl>
-                      <dt>机身颜色</dt>
-                      <dd>宝石蓝</dd>
-                      <dt>机身长度（mm）</dt>
-                      <dd>155.0</dd>
-                      <dt>机身宽度（mm）</dt>
-                      <dd>73.9</dd>
-                      <dt>机身厚度（mm）</dt>
-                      <dd>7.8</dd>
-                      <dt>机身重量（g）</dt>
-                      <dd>约180g（含电池）</dd>
-                      <dt>输入方式</dt>
-                      <dd>触控</dd>
-                      <dt>运营商标志或内容</dt>
-                      <dd>无</dd>
-                      <dt>机身材质分类</dt>
-                      <dd>玻璃后盖</dd>
-                    </dl>
-                  </div>
-                </div>
                 <div class="package-list">
                   <h3>包装清单</h3>
-                  <p>手机X1、快速指南X1、华为SuperCharge 充电器X1、三包凭证X1、Type-C 数字耳机X1、Type-C
-                    数据线X1、取卡针X1、TPU保护壳X1、USB Type-C转3.5mm耳机转接线X1（备注：最终以实物为准）</p>
+                  <p th:text="${spuDetail.packingList}"></p>
                 </div>
-
+                </div>
               </div>
               <div id="three" class="tab-pane">
                 <p>售后保障</p>
@@ -664,37 +607,71 @@
       </div>
     </div>
   </div>
-
-</div>
+ </div>
 <script src="/js/vue/vue.js"></script>
 <script src="/js/axios.min.js"></script>
 <script src="/js/common.js"></script>
 
 <script th:inline="javascript">
-  // sku集合
-  const skus = /*[[${skus}]]*/ [];
-  const spu = /*[[${spu}]]*/ {};
-  const spuDetail = /*[[${spuDetail}]]*/ {};
-  const paramMap = JSON.parse(spuDetail.specifications);
-  const specialSpec = JSON.parse(spuDetail.specTemplate);
-  const selecterSku = skus[0];
-  const indexes = selecterSku.indexes.toString().split("_");
+
 </script>
-<script>
+<script th:inline="javascript">
   var itemVm = new Vue({
     el: "#itemApp",
     data: {
       ly,
-      skus,
-      paramMap,
-      specialSpec,
-      spu,
-      spuDetail,
-      selecterSku,
-      indexes
+      skus: [],
+      paramMap: [],
+      specialSpec: {},
+      spu: {},
+      spuDetail: {},
+      specIndex: []
+    },
+    methods: {
+      changeSku(i, j) {
+        Vue.set(this.specIndex, i, j);
+      }
+    },
+    computed: {
+      sku() {
+        const index = Object.values(this.specIndex).join("_");
+        return this.skus.find(s => s.indexes == index);
+      },
+      images() {
+        return this.sku.images ? this.sku.images.split(",") : [''];
+      },
+      groups(){
+        const ownSpec = JSON.parse(this.sku.ownSpec);
+        const groups = this.paramMap;
+        groups.forEach(group=>{
+          group.params.forEach(param=>{
+            if (!param.global) {
+              param.v = ownSpec[param.k];
+            } else {
+              param.v = param.v || '其他';
+            }
+          })
+        })
+        return groups;
+      }
+
     },
     components: {
       lyTop: () => import('/js/pages/top.js')
+    },
+    created() {
+      // sku集合
+      const skus = /*[[${skus}]]*/ [];
+      const spu = /*[[${spu}]]*/ {};
+      const spuDetail = /*[[${spuDetail}]]*/ {};
+      const paramMap = JSON.parse(spuDetail.specifications);
+      const specialSpec = JSON.parse(spuDetail.specTemplate);
+      this.skus = skus;
+      this.spu = spu;
+      this.spuDetail = spuDetail;
+      this.paramMap = paramMap;
+      this.specialSpec = specialSpec;
+      this.specIndex = this.skus[0].indexes.toString().split("_").map(Number);
     }
   });
 </script>
@@ -721,13 +698,6 @@
 <script type="text/javascript" src="/js/plugins/jquery.jqzoom/jquery.jqzoom.js"></script>
 <script type="text/javascript" src="/js/plugins/jquery.jqzoom/zoom.js"></script>
 <script type="text/javascript" src="index/index.js"></script>
-<script th:inline="javascript">
-  const c = /*[[${categories}]]*/ [];
-  const d = /*[[${spu}]]*/ {};
-  const e = /*[[${spuDetail}]]*/ {};
-  const f = /*[[${skus}]]*/ [];
-  const g = /*[[${brand}]]*/ {};
-</script>
 </body>
 
 </html>

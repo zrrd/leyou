@@ -32,6 +32,8 @@ public class PageController {
     Map<String, Object> map = goodsService.loadModel(supId);
     //放入模型
     model.addAllAttributes(map);
+    // 页面静态化
+    goodsService.createHtml(map,supId);
     return "item";
   }
 }

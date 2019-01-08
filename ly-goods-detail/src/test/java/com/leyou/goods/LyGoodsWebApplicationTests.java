@@ -1,6 +1,7 @@
 package com.leyou.goods;
 
 import com.leyou.goods.controller.PageController;
+import com.leyou.goods.service.GoodsService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +15,12 @@ public class LyGoodsWebApplicationTests {
   @Autowired
   PageController pageController;
 
+  @Autowired
+  GoodsService goodsService;
+
   @Test
   public void contextLoads() {
-    //pageController.getSpecGroup(76L);
+  // goodsService.createHtml(153L);
   }
 
 }
