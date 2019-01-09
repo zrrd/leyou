@@ -11,7 +11,9 @@ import com.leyou.search.pojo.SearchResult;
 import com.leyou.search.repository.GoodsRepository;
 import com.leyou.search.service.BuildService;
 import com.leyou.search.service.SearchService;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import javax.annotation.Resource;
 import org.junit.Test;
@@ -77,6 +79,13 @@ public class LeyouSearchApplicationTests {
     SearchPageReq req = new SearchPageReq();
     req.setKey("手机");
     SearchResult search = searchService.search(req);
+  }
+
+  @Test
+  public void a() {
+
+    Map<String,List<String>> a = new HashMap<>();
+    String b = "{'a':['1','2','3']}";
   }
 }
 

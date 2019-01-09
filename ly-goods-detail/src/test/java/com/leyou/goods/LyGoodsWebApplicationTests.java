@@ -5,6 +5,7 @@ import com.leyou.goods.service.GoodsService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -17,10 +18,11 @@ public class LyGoodsWebApplicationTests {
 
   @Autowired
   GoodsService goodsService;
-
+  @Value("${static.html.url}")
+  private String htmlUrl;
   @Test
   public void contextLoads() {
-  // goodsService.createHtml(153L);
+    System.out.println(htmlUrl);
   }
 
 }

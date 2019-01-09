@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
@@ -27,16 +28,19 @@ import org.thymeleaf.context.Context;
  * @author shaoyijiong
  * @date 2019/1/7
  */
-@SuppressWarnings("CheckStyle")
 @Slf4j
 @Service
 public class GoodsService {
 
+  @Value("${static.html.url}")
+  private String htmlUrl;
   private final TemplateEngine templateEngine;
   private final GoodsClient goodsClient;
   private final BrandClient brandClient;
   private final CategoryClient categoryClient;
-
+  /**
+   * 注入
+   */
   @Autowired
   public GoodsService(GoodsClient goodsClient, BrandClient brandClient,
       CategoryClient categoryClient, TemplateEngine templateEngine) {
@@ -46,13 +50,16 @@ public class GoodsService {
     this.templateEngine = templateEngine;
   }
 
+  /**
+   * 加载属性
+   */
   public Map<String, Object> loadModel(Long spuId) {
     SpuDto spu = goodsClient.querySpuById(spuId);
     SpuDetailEditQueryDto spuDetail = goodsClient.querySpuDetailById(spuId);
     List<SkuQueryDto> skus = goodsClient.querySkuBySpuId(spuId);
     Brand brand = brandClient.queryBrandByIds(ImmutableList.of(spu.getBrandId())).get(0);
     List<Category> categories = getCategories(spu);
-    HashMap<String, Object> map = new HashMap<>();
+    HashMap<String, Object> map = new HashMap<>(5);
     map.put("spu", spu);
     map.put("spuDetail", spuDetail);
     map.put("skus", skus);
@@ -84,7 +91,8 @@ public class GoodsService {
     Context context = new Context();
     context.setVariables(map);
     //输出流
-    File file = new File("D:\\nginx-1.12.2\\html", spuId + ".html");
+    File file = new File(htmlUrl, spuId + ".html");
+    //tyr with resource 自动关闭流
     try (FileWriter writer = new FileWriter(file, false)) {
       //生成html
       templateEngine.process("item", context, writer);

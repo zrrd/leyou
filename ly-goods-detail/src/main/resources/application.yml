@@ -12,7 +12,10 @@ eureka:
     service-url:
       defaultZone: http://47.100.48.207:10086/eureka/
   instance:
-    lease-renewal-interval-in-seconds: 5 # \u6BCF\u96945\u79D2\u53D1\u9001\u4E00\u6B21\u5FC3\u8DF3
-    lease-expiration-duration-in-seconds: 10 # 10\u79D2\u4E0D\u53D1\u9001\u5C31\u8FC7\u671F
+    lease-renewal-interval-in-seconds: 5
+    lease-expiration-duration-in-seconds: 10
     prefer-ip-address: true
     instance-id: ${spring.application.name}.${server.port}
+static:
+  html:
+    url: D:\nginx-1.12.2\html

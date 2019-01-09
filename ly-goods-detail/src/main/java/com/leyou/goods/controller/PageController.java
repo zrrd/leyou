@@ -25,15 +25,17 @@ public class PageController {
   }
 
 
-  @SuppressWarnings("CheckStyle")
+  /**
+   * 请求商品详情
+   */
   @GetMapping("item/{id}.html")
-  public String toItemPage(Model model,@PathVariable("id") Long supId) {
+  public String toItemPage(Model model, @PathVariable("id") Long supId) {
     //准备模型数据
     Map<String, Object> map = goodsService.loadModel(supId);
     //放入模型
     model.addAllAttributes(map);
     // 页面静态化
-    goodsService.createHtml(map,supId);
+    goodsService.createHtml(map, supId);
     return "item";
   }
 }

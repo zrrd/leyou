@@ -34,6 +34,6 @@ public interface SpuQueryMapper extends BaseMapper<Spu> {
    * @param id spu id
    * @return spu实体
    */
-  @Select("SELECT * FROM tb_spu WHERE id = #{id}")
+  @Select("SELECT * FROM tb_spu WHERE id = #{id} AND valid = 1")
   SpuDto querySpuById(Long id);
 }
