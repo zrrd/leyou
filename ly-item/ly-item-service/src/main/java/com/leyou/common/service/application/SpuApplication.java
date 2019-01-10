@@ -20,4 +20,20 @@ public class SpuApplication {
     spu.insert();
     return spu.getId();
   }
+
+  /**
+   * 更新sku.
+   */
+  public Long updateSpu(SaveSpuDto dto) {
+    Spu spu = Spu.newInstForUpdate(dto.getId(), dto.getBrandId(), dto.getCid1(), dto.getCid2(),
+        dto.getCid3(),
+        dto.getTitle(), dto.getSubTitle());
+    spu.updateById();
+    return spu.getId();
+  }
+
+  public void deleteSpu(Long spuId) {
+    Spu spu = Spu.newInstForDelete(spuId);
+    spu.updateById();
+  }
 }

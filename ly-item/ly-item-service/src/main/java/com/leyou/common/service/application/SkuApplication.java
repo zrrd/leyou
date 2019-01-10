@@ -1,5 +1,6 @@
 package com.leyou.common.service.application;
 
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.leyou.common.service.pojo.domain.Sku;
 import com.leyou.common.service.pojo.dto.application.SaveSkuDto;
 import org.springframework.stereotype.Service;
@@ -19,5 +20,15 @@ public class SkuApplication {
         dto.getIndexes(), dto.getOwnSpec(), dto.getTitle());
     sku.insert();
     return sku.getId();
+  }
+
+  /**
+   * 删除sku
+   */
+  public void deleteSku(Long spuId) {
+    Sku sku = new Sku();
+    UpdateWrapper<Sku> uw = new UpdateWrapper<>();
+    uw.eq("spu_id", spuId);
+    sku.delete(uw);
   }
 }

@@ -20,4 +20,14 @@ public class SpuDetailApplication {
             dto.getSpecTemplate(), dto.getPackingList(), dto.getAfterService());
     spuDetail.insert();
   }
+
+  /**
+   * 更新
+   */
+  public void updateSpuDatail(SaveSpuDetailDto dto) {
+    SpuDetail spuDetail = SpuDetail
+        .newInstForSave(dto.getSpuId(), dto.getDescription(), dto.getSpecifications(),
+            dto.getSpecTemplate(), dto.getPackingList(), dto.getAfterService());
+    spuDetail.updateById();
+  }
 }

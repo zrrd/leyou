@@ -11,11 +11,12 @@ import lombok.Data;
 @Data
 public class SaveSpuDto {
 
-  Long brandId;
-  Long cid1;
-  Long cid2;
-  Long cid3;
-  String title;
-  String subTitle;
+  private Long id;
+  private Long brandId;
+  private Long cid1;
+  private Long cid2;
+  private Long cid3;
+  private String title;
+  private String subTitle;
 
 }

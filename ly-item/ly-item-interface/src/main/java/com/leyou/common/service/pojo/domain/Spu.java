@@ -10,6 +10,7 @@ import java.util.Date;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
@@ -21,6 +22,7 @@ import lombok.Setter;
 @Getter
 @Setter(AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor
 @TableName("tb_spu")
 public class Spu extends Model<Spu> {
 
@@ -66,5 +68,22 @@ public class Spu extends Model<Spu> {
       String subTitle) {
     return new Spu(null, title, subTitle, cid1, cid2, cid3,
         brandId, Saleable.SALE, Valid.ENABLE, new Date(), new Date());
+  }
+
+  public static Spu newInstForUpdate(Long id, Long brandId, Long cid1, Long cid2, Long cid3,
+      String title,
+      String subTitle) {
+    return new Spu(id, title, subTitle, cid1, cid2, cid3,
+        brandId, Saleable.SALE, Valid.ENABLE, new Date(), new Date());
+  }
+
+  /**
+   * 伪删除spu
+   */
+  public static Spu newInstForDelete(Long id) {
+    Spu spu = new Spu();
+    spu.setId(id);
+    spu.setValid(Valid.DELETE);
+    return spu;
   }
 }

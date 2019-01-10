@@ -38,6 +38,7 @@ public class GoodsService {
   private final GoodsClient goodsClient;
   private final BrandClient brandClient;
   private final CategoryClient categoryClient;
+
   /**
    * 注入
    */

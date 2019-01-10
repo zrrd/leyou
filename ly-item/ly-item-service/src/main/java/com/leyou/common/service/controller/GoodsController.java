@@ -10,7 +10,6 @@ import com.leyou.common.service.application.StockApplication;
 import com.leyou.common.service.mvc.req.SaveGoodsReq;
 import com.leyou.common.service.mvc.req.SaveGoodsReq.SkusBean;
 import com.leyou.common.service.mvc.req.SpuQueryPageReq;
-import com.leyou.common.service.pojo.domain.Spu;
 import com.leyou.common.service.pojo.dto.application.SaveSkuDto;
 import com.leyou.common.service.pojo.dto.application.SaveSpuDetailDto;
 import com.leyou.common.service.pojo.dto.application.SaveSpuDto;
@@ -21,14 +20,17 @@ import com.leyou.common.service.pojo.dto.query.SpuDto;
 import com.leyou.common.service.pojo.dto.query.SpuQueryDto;
 import com.leyou.common.service.query.GoodsQuery;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -38,6 +40,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author shaoyijiong
  * @date 2018/12/12
  */
+@SuppressWarnings("Duplicates")
 @RestController
 public class GoodsController {
 
@@ -101,6 +104,49 @@ public class GoodsController {
     stockApplication.saveStock(stockDtoList);
 
     return ResponseEntity.status(HttpStatus.CREATED).build();
+  }
+
+  /**
+   * 更新商品信息
+   */
+  @PutMapping("goods")
+  @Transactional(rollbackFor = Throwable.class)
+  public ResponseEntity<Void> updateGoods(@RequestBody SaveGoodsReq req) {
+    //更新抽象商品
+    SaveSpuDto saveSpuDto = new SaveSpuDto();
+    BeanUtils.copyProperties(req, saveSpuDto);
+    Long spuId = spuApplication.updateSpu(saveSpuDto);
+    //更新抽象商品描述
+    SaveSpuDetailDto saveSpuDetailDto = new SaveSpuDetailDto(spuId);
+    BeanUtils.copyProperties(req.getSpuDetail(), saveSpuDetailDto);
+    spuDetailApplication.updateSpuDatail(saveSpuDetailDto);
+
+    //删除原来的sku
+    skuApplication.deleteSku(spuId);
+
+    List<SaveStockDto> stockDtoList = Lists.newArrayList();
+    for (SkusBean sku : req.getSkus()) {
+      //保存商品实体信息
+      SaveSkuDto saveSkuDto = new SaveSkuDto(spuId);
+      BeanUtils.copyProperties(sku, saveSkuDto);
+      Long skuId = skuApplication.saveSku(saveSkuDto);
+      //保存库存信息
+      SaveStockDto saveStockDto = new SaveStockDto(skuId, sku.getStock());
+      stockDtoList.add(saveStockDto);
+    }
+    //删除原来的库存信息
+    stockApplication.deleteStock(
+        stockDtoList.stream().map(SaveStockDto::getSkuId).collect(Collectors.toList()));
+    //批量存入数据库
+    stockApplication.saveStock(stockDtoList);
+
+    return ResponseEntity.status(HttpStatus.CREATED).build();
+  }
+
+  @DeleteMapping("goods")
+  public ResponseEntity<Void> deleteGoods(Long spuId) {
+    spuApplication.deleteSpu(spuId);
+    return ResponseEntity.status(HttpStatus.OK).build();
   }
 
   /**

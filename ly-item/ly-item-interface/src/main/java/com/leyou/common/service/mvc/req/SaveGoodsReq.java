@@ -15,6 +15,7 @@ import lombok.Data;
 @AllArgsConstructor
 public class SaveGoodsReq implements Req {
 
+  private Long id;
   private Long brandId;
   private String title;
   private String subTitle;

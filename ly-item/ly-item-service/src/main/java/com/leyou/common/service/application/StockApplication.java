@@ -1,5 +1,6 @@
 package com.leyou.common.service.application;
 
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.collect.Lists;
 import com.leyou.common.service.application.mapper.StockMapper;
@@ -25,5 +26,15 @@ public class StockApplication extends ServiceImpl<StockMapper, Stock> {
       stocks.add(stock);
     });
     this.saveBatch(stocks);
+  }
+
+  /**
+   * 批量删除原来的sku 库存
+   */
+  public void deleteStock(List<Long> skuIds) {
+    UpdateWrapper<Stock> qw = new UpdateWrapper<>();
+    qw.in("sku_id", skuIds);
+    Stock stock = new Stock();
+    stock.delete(qw);
   }
 }
