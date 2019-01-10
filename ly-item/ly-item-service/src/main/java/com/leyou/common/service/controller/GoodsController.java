@@ -1,12 +1,14 @@
 package com.leyou.common.service.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.leyou.common.base.response.PageResult;
 import com.leyou.common.service.application.SkuApplication;
 import com.leyou.common.service.application.SpuApplication;
 import com.leyou.common.service.application.SpuDetailApplication;
 import com.leyou.common.service.application.StockApplication;
+import com.leyou.common.service.application.listener.Publisher;
 import com.leyou.common.service.mvc.req.SaveGoodsReq;
 import com.leyou.common.service.mvc.req.SaveGoodsReq.SkusBean;
 import com.leyou.common.service.mvc.req.SpuQueryPageReq;
@@ -14,6 +16,7 @@ import com.leyou.common.service.pojo.dto.application.SaveSkuDto;
 import com.leyou.common.service.pojo.dto.application.SaveSpuDetailDto;
 import com.leyou.common.service.pojo.dto.application.SaveSpuDto;
 import com.leyou.common.service.pojo.dto.application.SaveStockDto;
+import com.leyou.common.service.pojo.dto.event.ItemEvent;
 import com.leyou.common.service.pojo.dto.query.SkuQueryDto;
 import com.leyou.common.service.pojo.dto.query.SpuDetailEditQueryDto;
 import com.leyou.common.service.pojo.dto.query.SpuDto;
@@ -49,6 +52,7 @@ public class GoodsController {
   private final SpuApplication spuApplication;
   private final SpuDetailApplication spuDetailApplication;
   private final StockApplication stockApplication;
+  private final Publisher publisher;
 
   /**
    * 注入
@@ -56,12 +60,13 @@ public class GoodsController {
   @Autowired
   public GoodsController(GoodsQuery goodsQuery, SkuApplication skuApplication,
       SpuApplication spuApplication, SpuDetailApplication spuDetailApplication,
-      StockApplication stockApplication) {
+      StockApplication stockApplication, Publisher publisher) {
     this.goodsQuery = goodsQuery;
     this.skuApplication = skuApplication;
     this.spuApplication = spuApplication;
     this.spuDetailApplication = spuDetailApplication;
     this.stockApplication = stockApplication;
+    this.publisher = publisher;
   }
 
   /**
@@ -103,6 +108,8 @@ public class GoodsController {
     //批量存入数据库
     stockApplication.saveStock(stockDtoList);
 
+    //将消息发送倒消息队列  为搜索与页面静态化服务提供操作
+    publisher.publishEvent(new ItemEvent(ImmutableMap.of("spuId", spuId, "operating", "insert")));
     return ResponseEntity.status(HttpStatus.CREATED).build();
   }
 
@@ -140,12 +147,18 @@ public class GoodsController {
     //批量存入数据库
     stockApplication.saveStock(stockDtoList);
 
+    publisher.publishEvent(new ItemEvent(ImmutableMap.of("spuId", spuId, "operating", "update")));
     return ResponseEntity.status(HttpStatus.CREATED).build();
   }
 
+  /**
+   * 删除商品
+   */
   @DeleteMapping("goods")
   public ResponseEntity<Void> deleteGoods(Long spuId) {
     spuApplication.deleteSpu(spuId);
+
+    publisher.publishEvent(new ItemEvent(ImmutableMap.of("spuId", spuId, "operating", "delete")));
     return ResponseEntity.status(HttpStatus.OK).build();
   }
 

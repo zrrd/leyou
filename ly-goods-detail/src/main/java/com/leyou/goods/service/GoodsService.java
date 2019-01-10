@@ -88,6 +88,11 @@ public class GoodsService {
    */
   @Async
   public void createHtml(Map<String, Object> map, Long spuId) {
+
+    if (map == null) {
+      map = loadModel(spuId);
+    }
+
     //上下文
     Context context = new Context();
     context.setVariables(map);

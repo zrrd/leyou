@@ -9,6 +9,23 @@ spring:
     name: item-service
   profiles:
     active: dev
+
+  rabbitmq:
+    host: 47.99.73.15
+    port: 5672
+    username: guest
+    password: guest
+    #消息确认
+    publisher-confirms: true
+    template:
+      exchange: ly.item.exchange
+      #失败重试
+      retry:
+        enabled: true
+        initial-interval: 10000ms
+        max-interval: 30000ms
+        multiplier: 2
+
 eureka:
   client:
     service-url:
