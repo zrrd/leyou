@@ -166,4 +166,8 @@ public class BuildService {
   public void insertIndex(List<Goods> goods) {
     goodsRepository.saveAll(goods);
   }
+
+  public void deleteIndex(Long spuId) {
+    goodsRepository.deleteById(spuId);
+  }
 }

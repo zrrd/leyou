@@ -13,4 +13,5 @@ public class Specification {
 
   private String group;
   private List<Map<String, Object>> params;
+  private Boolean empty;
 }

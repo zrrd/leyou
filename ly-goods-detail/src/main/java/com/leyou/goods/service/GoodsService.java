@@ -12,6 +12,7 @@ import com.leyou.goods.client.GoodsClient;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -98,6 +99,8 @@ public class GoodsService {
     context.setVariables(map);
     //输出流
     File file = new File(htmlUrl, spuId + ".html");
+    //如果存在的话先删除
+    file.deleteOnExit();
     //tyr with resource 自动关闭流
     try (FileWriter writer = new FileWriter(file, false)) {
       //生成html
@@ -105,5 +108,16 @@ public class GoodsService {
     } catch (IOException e) {
       log.error("生成静态页异常", e);
     }
+  }
+
+  /**
+   * 删除文件
+   */
+  @Async
+  public void delete(Long spuId) {
+
+    //输出流
+    File file = new File(htmlUrl, spuId + ".html");
+    file.deleteOnExit();
   }
 }

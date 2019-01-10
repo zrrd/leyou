@@ -1,7 +1,6 @@
-package com.leyou.search.mq;
+package com.leyou.goods.mq;
 
-import com.google.common.collect.ImmutableList;
-import com.leyou.search.service.BuildService;
+import com.leyou.goods.service.GoodsService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.ExchangeTypes;
 import org.springframework.amqp.rabbit.annotation.Exchange;
@@ -19,18 +18,18 @@ import org.springframework.stereotype.Component;
 @Component
 public class ItemListener {
 
-  private final BuildService buildService;
+  private final GoodsService goodsService;
 
   @Autowired
-  public ItemListener(BuildService buildService) {
-    this.buildService = buildService;
+  public ItemListener(GoodsService goodsService) {
+    this.goodsService = goodsService;
   }
 
   /**
    * 消息队列的监听
    */
   @RabbitListener(bindings = @QueueBinding(
-      value = @Queue(value = "ly.create.index.queue", durable = "true"),
+      value = @Queue(value = "ly.create.detail.queue", durable = "true"),
       exchange = @Exchange(
           value = "ly.item.exchange",
           ignoreDeclarationExceptions = "true",
@@ -42,7 +41,7 @@ public class ItemListener {
       return;
     }
     //对索引库进行新增或修改
-    buildService.insertIndex(ImmutableList.of(buildService.build(spuId)));
+    goodsService.createHtml(null,spuId);
   }
 
 
@@ -50,7 +49,7 @@ public class ItemListener {
    * 消息队列的监听
    */
   @RabbitListener(bindings = @QueueBinding(
-      value = @Queue(value = "ly.delete.index.queue", durable = "true"),
+      value = @Queue(value = "ly.delete.detail.queue", durable = "true"),
       exchange = @Exchange(
           value = "ly.item.exchange",
           ignoreDeclarationExceptions = "true",
@@ -62,6 +61,6 @@ public class ItemListener {
       return;
     }
     //对索引库进行新增或修改
-    buildService.deleteIndex(spuId);
+    goodsService.createHtml(null,spuId);
   }
 }

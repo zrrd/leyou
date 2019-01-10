@@ -7,6 +7,11 @@ spring:
     cache: false
   main:
     allow-bean-definition-overriding: true
+  rabbitmq:
+    host: 47.99.73.15
+    port: 5672
+    username: guest
+    password: guest
 eureka:
   client:
     service-url:
@@ -18,4 +23,4 @@ eureka:
     instance-id: ${spring.application.name}.${server.port}
 static:
   html:
-    url: D:\nginx-1.12.2\html
+    url: D:\nginx\html
