@@ -9,9 +9,6 @@ spring:
       cluster-nodes: 47.99.73.15:9300
   rabbitmq:
     host: 47.99.73.15
-    port: 5672
-    username: guest
-    password: guest
   #不允许有空值  空置不返回
   jackson:
     default-property-inclusion: non_null

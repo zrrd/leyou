@@ -12,9 +12,6 @@ spring:
 
   rabbitmq:
     host: 47.99.73.15
-    port: 5672
-    username: guest
-    password: guest
     #消息确认
     publisher-confirms: true
     template:
@@ -40,6 +37,6 @@ eureka:
     lease-expiration-duration-in-seconds: 10 #eureka 服务过期时间
 mybatis-plus:
   mapper-locations: classpath*:mapper/**/*Mapper.xml
-  type-enums-package: com.leyou.common.service.enums
+  type-enums-package: com.leyou.service.pojo.enums
   configuration:
     map-underscore-to-camel-case: true #驼峰转下划线

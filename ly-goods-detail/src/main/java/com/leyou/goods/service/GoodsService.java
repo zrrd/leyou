@@ -1,18 +1,17 @@
 package com.leyou.goods.service;
 
 import com.google.common.collect.ImmutableList;
-import com.leyou.common.service.pojo.domain.Brand;
-import com.leyou.common.service.pojo.domain.Category;
-import com.leyou.common.service.pojo.dto.query.SkuQueryDto;
-import com.leyou.common.service.pojo.dto.query.SpuDetailEditQueryDto;
-import com.leyou.common.service.pojo.dto.query.SpuDto;
 import com.leyou.goods.client.BrandClient;
 import com.leyou.goods.client.CategoryClient;
 import com.leyou.goods.client.GoodsClient;
+import com.leyou.service.pojo.domain.Brand;
+import com.leyou.service.pojo.domain.Category;
+import com.leyou.service.pojo.dto.query.SkuQueryDto;
+import com.leyou.service.pojo.dto.query.SpuDetailEditQueryDto;
+import com.leyou.service.pojo.dto.query.SpuDto;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;

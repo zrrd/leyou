@@ -15,6 +15,7 @@
     <module>ly-upload</module>
     <module>ly-item</module>
     <module>ly-goods-detail</module>
+    <module>ly-sms</module>
   </modules>
   <packaging>pom</packaging>
 

@@ -9,9 +9,6 @@ spring:
     allow-bean-definition-overriding: true
   rabbitmq:
     host: 47.99.73.15
-    port: 5672
-    username: guest
-    password: guest
 eureka:
   client:
     service-url:

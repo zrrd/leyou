@@ -1,6 +1,6 @@
 package com.leyou.search.client;
 
-import com.leyou.common.service.api.BrandApi;
+import com.leyou.service.api.BrandApi;
 import org.springframework.cloud.openfeign.FeignClient;
 
 /**
