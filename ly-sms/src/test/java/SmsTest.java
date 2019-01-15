@@ -1,16 +1,14 @@
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.leyou.sms.LySmsApplication;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
-import org.springframework.web.client.RestTemplate;
 
 /**
  * @author shaoyijiong
@@ -20,25 +18,29 @@ import org.springframework.web.client.RestTemplate;
 @RunWith(SpringRunner.class)
 public class SmsTest {
 
+  @Autowired
+  private RabbitTemplate rabbitTemplate;
+
+  @Autowired
+  private StringRedisTemplate redisTemplate;
+  private static final String VERITY_PREFIX = "sms:verity:";
+
   @Test
-  public void sendTest() throws JsonProcessingException {
-    ObjectMapper objectMapper = new ObjectMapper();
-    String apikey = "5bca25375f73df47070232a2cb8fd1df";
-
-    RestTemplate restTemplate = new RestTemplate();
-    HttpHeaders headers = new HttpHeaders();
-    headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-    headers.add("Accept", MediaType.APPLICATION_JSON.toString());
-    MultiValueMap<String, String> params= new LinkedMultiValueMap<>();
-    params.add("apikey", apikey);
-    params.add("text", "【云片网】您的验证码是1234");
-    params.add("mobile", "17826808394");
-
-    HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(params, headers);
-
-    String a = restTemplate
-        .postForObject("https://sms.yunpian.com/v2/sms/single_send.json",
-            requestEntity, String.class);
-    System.out.println(a);
+  public void sendTest() throws InterruptedException {
+    Map<String, String> map = new HashMap<>();
+    map.put("code", "9417");
+    map.put("phone", "17826808394");
+    rabbitTemplate.convertAndSend("ly.sms.exchange", "ly.sms.verity", map);
+    TimeUnit.SECONDS.sleep(60);
   }
+
+  @Test
+  public void redisTest() {
+    String phone = "17826808394";
+    redisTemplate.opsForValue()
+        .set(phone, String.valueOf(System.currentTimeMillis()), 10, TimeUnit.SECONDS);
+
+    redisTemplate.opsForValue().get(phone);
+  }
+
 }
