@@ -41,7 +41,7 @@ public class YunPianSmsServiceImpl implements SmsService {
   public void sendVerificationCode(String code, String phone) {
     //按照手机号限流
     String lastTime = redisTemplate.opsForValue().get(VERITY_PREFIX + phone);
-    if (lastTime != null && System.currentTimeMillis() - Long.valueOf(lastTime) < properties
+    if (lastTime != null && System.currentTimeMillis() - Long.parseLong(lastTime) < properties
         .getSendLimit()) {
       return;
     }

@@ -4,6 +4,8 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 import com.leyou.common.utils.NumberUtils;
 import com.leyou.search.client.BrandClient;
 import com.leyou.search.client.CategoryClient;
@@ -235,9 +237,9 @@ public class SearchService {
 
     // 2、过滤出可以搜索的哪些规格参数的名称，分成数值类型、字符串类型
     // 准备集合，保存字符串规格参数名
-    Set<String> strSpec = new HashSet<>();
+    Set<String> strSpec = Sets.newHashSet();
     // 准备map，保存数值规格参数名及单位
-    Map<String, String> numericalUnits = new HashMap<>(12);
+    Map<String, String> numericalUnits = Maps.newHashMap();
     // 解析规格
     for (Specification spec : specs) {
       List<Map<String, Object>> params = spec.getParams();
@@ -266,7 +268,7 @@ public class SearchService {
    * 聚合得到interval
    **/
   private Map<String, Double> getNumericalInterval(Long cid, Set<String> keySet) {
-    Map<String, Double> numbericalSpecs = new HashMap<>(12);
+    Map<String, Double> numbericalSpecs = Maps.newHashMap();
     // 准备查询条件
     NativeSearchQueryBuilder queryBuilder = new NativeSearchQueryBuilder();
     // 不查询任何数据
@@ -337,7 +339,7 @@ public class SearchService {
 
     // 解析数值类型
     for (Map.Entry<String, Double> entry : numericalInterval.entrySet()) {
-      Map<String, Object> spec = new HashMap<>(12);
+      Map<String, Object> spec = Maps.newHashMap();
       String key = entry.getKey();
       spec.put("k", key);
       spec.put("unit", numericalUnits.get(key));
@@ -362,7 +364,7 @@ public class SearchService {
 
     // 解析字符串类型
     strSpec.forEach(key -> {
-      Map<String, Object> spec = new HashMap<>(12);
+      Map<String, Object> spec = Maps.newHashMap();
       spec.put("k", key);
       StringTerms terms = (StringTerms) aggs.get(key);
       spec.put("options", terms.getBuckets().stream().map(Bucket::getKeyAsString));

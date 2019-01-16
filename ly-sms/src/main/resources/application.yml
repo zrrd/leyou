@@ -1,3 +1,5 @@
+server:
+  port: 8085
 spring:
   rabbitmq:
     host: 47.99.73.15
@@ -5,8 +7,6 @@ spring:
     name: sms-service
   redis:
     host: 47.99.73.15
-server:
-  port: 8085
 yunpian:
   apikey: 5bca25375f73df47070232a2cb8fd1df
-  singleSendUrl: https://sms.yunpian.com/v2/sms/single_send.json
+  singleSendUrl: https://sms.yunpian.com/v2/sms/SINGLE_SEND.json

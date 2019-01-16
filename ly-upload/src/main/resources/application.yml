@@ -1,3 +1,8 @@
+spring:
+  application:
+    name: upload-service
+server:
+  port: 8082
 eureka:
   client:
     service-url:
@@ -10,11 +15,6 @@ eureka:
     prefer-ip-address: true
     lease-renewal-interval-in-seconds: 5 #eureka 服务查找周期
     lease-expiration-duration-in-seconds: 10 #eureka 服务过期时间
-spring:
-  application:
-    name: upload-service
-server:
-  port: 8082
 fdfs:
   so-timeout: 1501
   connect-timeout: 601

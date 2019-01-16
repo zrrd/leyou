@@ -6,7 +6,7 @@ spring:
     username: root
     password: 123456
   application:
-    name: item-service
+    name: user-service
   profiles:
     active: dev
 eureka:
@@ -26,3 +26,7 @@ mybatis-plus:
   type-enums-package: com.leyou.service.pojo.enums
   configuration:
     map-underscore-to-camel-case: true #\u9A7C\u5CF0\u8F6C\u4E0B\u5212\u7EBF
+ly:
+  mq:
+    smsExchange: ly.sms.exchange
+    smsVerityRoutingKey: ly.sms.verity

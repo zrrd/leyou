@@ -2,10 +2,12 @@ package com.leyou.service;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
 /**
  * @author shaoyijiong
  */
+@EnableConfigurationProperties
 @SpringBootApplication
 public class LyUserServiceApplication {
 

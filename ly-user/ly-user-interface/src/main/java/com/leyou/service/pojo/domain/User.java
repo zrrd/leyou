@@ -1,7 +1,10 @@
 package com.leyou.service.pojo.domain;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Date;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -22,9 +25,16 @@ import lombok.Setter;
 @TableName("tb_user")
 public class User extends Model<User> {
 
+  @TableId(type = IdType.AUTO)
   private Long id;
   private String user;
+  @JsonIgnore
   private String password;
   private String phone;
   private Date created;
+  /**
+   * 加密盐值
+   */
+  @JsonIgnore
+  private String salt;
 }

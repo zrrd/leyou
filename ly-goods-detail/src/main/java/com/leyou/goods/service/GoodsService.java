@@ -1,6 +1,7 @@
 package com.leyou.goods.service;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Maps;
 import com.leyou.goods.client.BrandClient;
 import com.leyou.goods.client.CategoryClient;
 import com.leyou.goods.client.GoodsClient;
@@ -9,9 +10,14 @@ import com.leyou.service.pojo.domain.Category;
 import com.leyou.service.pojo.dto.query.SkuQueryDto;
 import com.leyou.service.pojo.dto.query.SpuDetailEditQueryDto;
 import com.leyou.service.pojo.dto.query.SpuDto;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -20,6 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.security.crypto.codec.Utf8;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
@@ -60,7 +67,7 @@ public class GoodsService {
     List<SkuQueryDto> skus = goodsClient.querySkuBySpuId(spuId);
     Brand brand = brandClient.queryBrandByIds(ImmutableList.of(spu.getBrandId())).get(0);
     List<Category> categories = getCategories(spu);
-    HashMap<String, Object> map = new HashMap<>(5);
+    HashMap<String, Object> map = Maps.newHashMapWithExpectedSize(5);
     map.put("spu", spu);
     map.put("spuDetail", spuDetail);
     map.put("skus", skus);
@@ -101,7 +108,8 @@ public class GoodsService {
     //如果存在的话先删除
     file.deleteOnExit();
     //tyr with resource 自动关闭流
-    try (FileWriter writer = new FileWriter(file, false)) {
+    try (Writer writer = new BufferedWriter(
+        new OutputStreamWriter(new FileOutputStream(file, false), Charset.forName("UTF-8")))) {
       //生成html
       templateEngine.process("item", context, writer);
     } catch (IOException e) {
