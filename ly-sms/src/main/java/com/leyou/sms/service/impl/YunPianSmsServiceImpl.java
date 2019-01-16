@@ -55,8 +55,13 @@ public class YunPianSmsServiceImpl implements SmsService {
     params.add("mobile", phone);
 
     HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(params, headers);
-
-    Map resp = restTemplate.postForObject(properties.getSingleSendUrl(), request, Map.class);
+    Map resp;
+    try {
+      resp = restTemplate.postForObject(properties.getSingleSendUrl(), request, Map.class);
+    } catch (Exception e) {
+      log.error("发送失败", e);
+      return;
+    }
     if (resp != null && (Integer) resp.get(CODE) == 0) {
       log.info("发送成功");
       //设置有效期为15分钟
