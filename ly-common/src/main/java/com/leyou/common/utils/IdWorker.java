@@ -82,8 +82,6 @@ public class IdWorker {
   }
 
   /**
-   * .
-   *
    * @param workerId 工作机器ID
    * @param dataCenterId 序列号
    */

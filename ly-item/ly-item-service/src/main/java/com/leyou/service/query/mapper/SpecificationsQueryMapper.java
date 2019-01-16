@@ -3,8 +3,6 @@ package com.leyou.service.query.mapper;
 import org.apache.ibatis.annotations.Select;
 
 /**
- * .
- *
  * @author shaoyijiong
  * @date 2018/12/11
  */

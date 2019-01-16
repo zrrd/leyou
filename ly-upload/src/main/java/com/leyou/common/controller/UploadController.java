@@ -11,7 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 /**
  * 上次图片文件.
  *
- * @author 邵益炯
+ * @author shaoyijiong
  * @date 2018/12/4
  */
 @RestController

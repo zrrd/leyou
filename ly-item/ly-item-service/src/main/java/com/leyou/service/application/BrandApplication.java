@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * 品牌应用类
  *
- * @author 邵益炯
+ * @author shaoyijiong
  * @date 2018/11/30
  */
 @Service

@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Profile;
 /**
  * mybatis-plus 配置插件.
  *
- * @author shaoyijong
+ * @author shaoyijiong
  * @date 2018/11/30
  */
 @Configuration

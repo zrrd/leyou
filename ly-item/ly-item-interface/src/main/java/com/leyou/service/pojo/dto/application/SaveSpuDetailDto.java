@@ -3,8 +3,6 @@ package com.leyou.service.pojo.dto.application;
 import lombok.Data;
 
 /**
- * .
- *
  * @author shaoyijiong
  * @date 2018/12/14
  */

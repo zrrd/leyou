@@ -8,9 +8,7 @@ import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.TimeUnit;
 
 /**
- * .
- *
- * @author 邵益炯
+ * @author shaoyijiong
  * @date 2018/11/21
  */
 public class UtilsTest {

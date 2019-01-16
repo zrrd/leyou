@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
  * 该类实现ApplicationContextAware接口,得到ApplicationContext对象,使用该对象的publishEvent方法发布事件.
  * </p>
  *
- * @author 邵益炯
+ * @author shaoyijiong
  * @date 2018/10/26
  */
 @Component

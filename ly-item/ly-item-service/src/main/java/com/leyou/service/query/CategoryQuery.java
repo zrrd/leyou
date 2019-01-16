@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 /**
  * 商品类目相关查询.
  *
- * @author 邵益炯
+ * @author shaoyijiong
  * @date 2018/11/28
  */
 @Service

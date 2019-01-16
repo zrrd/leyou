@@ -3,8 +3,6 @@ package com.leyou.common.base.exception;
 import lombok.Getter;
 
 /**
- * .
- *
  * @author shaoyijiong
  */
 @Getter

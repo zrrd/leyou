@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 /**
  * 异常拦截器.
  *
- * @author 邵益炯
+ * @author shaoyijiong
  * @date 2018/12/4
  */
 @ControllerAdvice
