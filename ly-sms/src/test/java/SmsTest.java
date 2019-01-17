@@ -30,7 +30,7 @@ public class SmsTest {
     map.put("code", "9417");
     map.put("phone", "17826808394");
     rabbitTemplate.convertAndSend("ly.sms.exchange", "ly.sms.verity", map);
-    TimeUnit.SECONDS.sleep(60);
+    TimeUnit.SECONDS.sleep(10);
   }
 
   @Test

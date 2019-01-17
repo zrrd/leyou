@@ -9,23 +9,23 @@ spring:
     name: user-service
   profiles:
     active: dev
+  rabbitmq:
+    host: 47.99.73.15
 eureka:
   client:
     service-url:
       defaultZone: http://47.100.48.207:10086/eureka/
-    #\u6BCF\u591A\u5C11\u79D2\u83B7\u53D6\u670D\u52A1\u5217\u8868
     registry-fetch-interval-seconds: 5
   instance:
     instance-id: ${spring.application.name}:${server.port}
-    #\u9ED8\u8BA4\u4EE5ip\u4F18\u5148  \u800C\u4E0D\u662F\u4E3B\u673A\u540D
     prefer-ip-address: true
-    lease-renewal-interval-in-seconds: 5 #eureka \u670D\u52A1\u67E5\u627E\u5468\u671F
-    lease-expiration-duration-in-seconds: 10 #eureka \u670D\u52A1\u8FC7\u671F\u65F6\u95F4
+    lease-renewal-interval-in-seconds: 5
+    lease-expiration-duration-in-seconds: 10
 mybatis-plus:
   mapper-locations: classpath*:mapper/**/*Mapper.xml
   type-enums-package: com.leyou.service.pojo.enums
   configuration:
-    map-underscore-to-camel-case: true #\u9A7C\u5CF0\u8F6C\u4E0B\u5212\u7EBF
+    map-underscore-to-camel-case: true
 ly:
   mq:
     smsExchange: ly.sms.exchange
