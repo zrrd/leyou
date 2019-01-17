@@ -49,6 +49,16 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-cache</artifactId>
     </dependency>
+    <dependency>
+      <groupId>com.yunpian.sdk</groupId>
+      <artifactId>yunpian-java-sdk</artifactId>
+      <version>1.2.7</version>
+    </dependency>
+    <dependency>
+      <groupId>com.leyou.common</groupId>
+      <artifactId>ly-common</artifactId>
+      <version>1.0.0-SNAPSHOT</version>
+    </dependency>
   </dependencies>
 
   <build>

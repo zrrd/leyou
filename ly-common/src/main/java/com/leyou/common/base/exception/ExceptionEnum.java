@@ -21,7 +21,8 @@ public enum ExceptionEnum {
   UPLOAD_IMAGE_ERROR(400, "上传失败,图片错误"),
   UPLOAD_ERROR(500, "文件上传失败"),
   BRAND_NAME_USED(500, "该品牌名称已被使用,请使用其他品牌名称"),
-  INVALID_USER_DATA_TYPE(400,"用户的数据类型无效")
+  INVALID_USER_DATA_TYPE(400,"用户的数据类型无效"),
+  SEND_SMS_ERROR(500, "发送短信异常"),
   ;
 
   /**

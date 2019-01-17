@@ -23,7 +23,6 @@ public class SmsTest {
 
   @Autowired
   private StringRedisTemplate redisTemplate;
-  private static final String VERITY_PREFIX = "sms:verity:";
 
   @Test
   public void sendTest() throws InterruptedException {

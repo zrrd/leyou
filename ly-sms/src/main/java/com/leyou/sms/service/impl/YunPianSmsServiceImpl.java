@@ -1,18 +1,17 @@
 package com.leyou.sms.service.impl;
 
+import com.leyou.common.base.exception.ExceptionEnum;
+import com.leyou.common.base.exception.LyException;
 import com.leyou.sms.service.SmsService;
+import com.yunpian.sdk.YunpianClient;
+import com.yunpian.sdk.model.Result;
+import com.yunpian.sdk.model.SmsSingleSend;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
-import org.springframework.web.client.RestTemplate;
 
 /**
  * 云片渠道短信发送
@@ -24,17 +23,19 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class YunPianSmsServiceImpl implements SmsService {
 
+
   private static final String VERITY_PREFIX = "sms:verity:";
-  private static final String CODE = "code";
   private final YunPianProperties properties;
   private final RedisTemplate<String, String> redisTemplate;
-  private RestTemplate restTemplate = new RestTemplate();
+  private YunpianClient client;
 
+  @SuppressWarnings("CheckStyle")
   @Autowired
   public YunPianSmsServiceImpl(RedisTemplate<String, String> redisTemplate,
       YunPianProperties properties) {
     this.redisTemplate = redisTemplate;
     this.properties = properties;
+    this.client = new YunpianClient(properties.getApikey()).init();
   }
 
   @Override
@@ -45,24 +46,8 @@ public class YunPianSmsServiceImpl implements SmsService {
         .getSendLimit()) {
       return;
     }
-
-    HttpHeaders headers = new HttpHeaders();
-    headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-    headers.add("Accept", MediaType.APPLICATION_JSON.toString());
-    MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-    params.add("apikey", properties.getApikey());
-    params.add("text", "【云片网】您的验证码是" + code);
-    params.add("mobile", phone);
-
-    HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(params, headers);
-    Map resp;
-    try {
-      resp = restTemplate.postForObject(properties.getSingleSendUrl(), request, Map.class);
-    } catch (Exception e) {
-      log.error("发送失败", e);
-      return;
-    }
-    if (resp != null && (Integer) resp.get(CODE) == 0) {
+    Result<SmsSingleSend> result = singleSend(code, phone);
+    if (result != null && result.getCode() == 0) {
       log.info("发送成功");
       //设置有效期为15分钟
       redisTemplate.opsForValue()
@@ -71,5 +56,21 @@ public class YunPianSmsServiceImpl implements SmsService {
     } else {
       log.error("发送异常手机号{}", phone);
     }
+  }
+
+
+  private Result<SmsSingleSend> singleSend(String code, String phone) {
+    Result<SmsSingleSend> result;
+    Map<String, String> param = client.newParam(2);
+    param.put("text", "【云片网】您的验证码是" + code);
+    param.put("mobile", phone);
+
+    try {
+      result = client.sms().single_send(param);
+    } catch (Exception e) {
+      log.error("发送失败", e);
+      throw new LyException(ExceptionEnum.SEND_SMS_ERROR);
+    }
+    return result;
   }
 }

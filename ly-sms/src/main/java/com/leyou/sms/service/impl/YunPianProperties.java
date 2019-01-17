@@ -24,5 +24,5 @@ public class YunPianProperties {
   /**
    * 有效期 单位分钟
    */
-  private Integer validityPeriod = 15;
+  private Integer validityPeriod = 5;
 }
