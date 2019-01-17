@@ -41,18 +41,17 @@ public class YunPianSmsServiceImpl implements SmsService {
   @Override
   public void sendVerificationCode(String code, String phone) {
     //按照手机号限流
-    String lastTime = redisTemplate.opsForValue().get(VERITY_PREFIX + phone);
-    if (lastTime != null && System.currentTimeMillis() - Long.parseLong(lastTime) < properties
+    Long expire = redisTemplate.getExpire(VERITY_PREFIX + phone, TimeUnit.SECONDS);
+    if (expire != null && expire > 0 && properties.getValidityPeriod() - expire < properties
         .getSendLimit()) {
       return;
     }
     Result<SmsSingleSend> result = singleSend(code, phone);
     if (result != null && result.getCode() == 0) {
       log.info("发送成功");
-      //设置有效期为15分钟
-      redisTemplate.opsForValue()
-          .set(VERITY_PREFIX + phone, String.valueOf(System.currentTimeMillis()),
-              properties.getValidityPeriod(), TimeUnit.MINUTES);
+      //设置有效期为5分钟
+      redisTemplate.opsForValue().set(VERITY_PREFIX + phone, code,
+          properties.getValidityPeriod(), TimeUnit.SECONDS);
     } else {
       log.error("发送异常手机号{}", phone);
     }

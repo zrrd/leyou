@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 public class SpuDetailApplication {
 
   /**
-   * 保存SaveSpuDetail.
+   * 保存SaveSpuDetail
    */
   public void saveSpuDetail(SaveSpuDetailDto dto) {
     SpuDetail spuDetail = SpuDetail

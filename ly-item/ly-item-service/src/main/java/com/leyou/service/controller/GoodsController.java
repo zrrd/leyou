@@ -70,7 +70,7 @@ public class GoodsController {
   }
 
   /**
-   * 分页查询spu.
+   * 分页查询spu
    */
   @GetMapping("spu/page")
   public ResponseEntity<PageResult<SpuQueryDto>> querySpuByPage(SpuQueryPageReq req) {

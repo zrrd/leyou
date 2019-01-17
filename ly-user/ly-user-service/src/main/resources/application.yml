@@ -11,6 +11,8 @@ spring:
     active: dev
   rabbitmq:
     host: 47.99.73.15
+  redis:
+    host: 47.99.73.15
 eureka:
   client:
     service-url:

@@ -35,7 +35,7 @@ public class SpecificationsController {
   }
 
   /**
-   * 规格请求.
+   * 规格请求
    */
   @GetMapping("{id}")
   public ResponseEntity<String> querySpecifications(@PathVariable("id") Long id) {
@@ -47,7 +47,7 @@ public class SpecificationsController {
   }
 
   /**
-   * 保存规格参数.
+   * 保存规格参数
    */
   @PostMapping
   public ResponseEntity saveSpecifications(SaveSpecReq req) {
@@ -56,7 +56,7 @@ public class SpecificationsController {
   }
 
   /**
-   * 修改规格参数.
+   * 修改规格参数
    */
   @PutMapping
   public ResponseEntity updateSpecifications(SaveSpecReq req) {

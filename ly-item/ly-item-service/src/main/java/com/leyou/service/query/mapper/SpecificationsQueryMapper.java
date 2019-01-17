@@ -9,7 +9,7 @@ import org.apache.ibatis.annotations.Select;
 public interface SpecificationsQueryMapper {
 
   /**
-   * 根据品类查找规格消息.
+   * 根据品类查找规格消息
    *
    * @param cid 品类id
    * @return 规格消息json数据

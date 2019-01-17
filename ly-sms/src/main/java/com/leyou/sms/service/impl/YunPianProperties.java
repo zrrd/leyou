@@ -18,11 +18,11 @@ public class YunPianProperties {
   private String apikey;
   private String singleSendUrl;
   /**
-   * 限流 单位毫秒
+   * 限流 单位秒
    */
-  private Integer sendLimit = 60_000;
+  private Integer sendLimit = 60;
   /**
-   * 有效期 单位分钟
+   * 有效期 单位秒
    */
-  private Integer validityPeriod = 5;
+  private Integer validityPeriod = 300;
 }

@@ -13,7 +13,7 @@ import org.apache.ibatis.annotations.Param;
 public interface BrandMapper extends BaseMapper<Brand> {
 
   /**
-   * 插入品牌 品类中间表.
+   * 插入品牌 品类中间表
    *
    * @param cid 分类id
    * @param bid 品牌id

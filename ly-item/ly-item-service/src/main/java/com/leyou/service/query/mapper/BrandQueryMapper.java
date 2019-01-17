@@ -10,7 +10,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 /**
- * 品牌相关mapper.
+ * 品牌相关mapper
  *
  * @author shaoyijiong
  * @date 2018/11/28

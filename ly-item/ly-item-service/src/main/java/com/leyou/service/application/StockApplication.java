@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 public class StockApplication extends ServiceImpl<StockMapper, Stock> {
 
   /**
-   * 保存stock.
+   * 保存stock
    */
   public void saveStock(List<SaveStockDto> stockDtoList) {
     List<Stock> stocks = Lists.newArrayList();

@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
- * 商品查询.
+ * 商品查询
  *
  * @author shaoyijiong
  * @date 2018/11/29
@@ -30,7 +30,7 @@ public class BrandQuery {
   }
 
   /**
-   * 分页查询品牌.
+   * 分页查询品牌
    */
   public IPage<BrandQueryDto> queryBrandByPage(Page page, String key) {
     if (!Strings.isNullOrEmpty(key)) {

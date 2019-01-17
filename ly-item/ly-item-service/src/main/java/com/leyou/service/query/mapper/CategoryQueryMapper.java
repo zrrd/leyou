@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 /**
- * 商品类目相关mapper.
+ * 商品类目相关mapper
  *
  * @author shaoyijiong
  * @date 2018/11/28
@@ -15,7 +15,7 @@ import org.apache.ibatis.annotations.Select;
 public interface CategoryQueryMapper {
 
   /**
-   * 查询品类.
+   * 查询品类
    *
    * @param parentId 父id
    * @return 品类列表

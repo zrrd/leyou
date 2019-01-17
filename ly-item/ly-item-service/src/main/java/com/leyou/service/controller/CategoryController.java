@@ -43,7 +43,7 @@ public class CategoryController {
   }
 
   /**
-   * 根据父类商品类目查找子类商品类目.
+   * 根据父类商品类目查找子类商品类目
    */
   @GetMapping("list")
   public ResponseEntity<List<CategoryQueryDto>> queryCategoryByPid(Long pid) {

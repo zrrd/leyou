@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 public class SkuApplication {
 
   /**
-   * 保存sku.
+   * 保存sku
    */
   public Long saveSku(SaveSkuDto dto) {
     Sku sku = Sku.newInstForSave(dto.getSpuId(), dto.getEnable(), dto.getPrice(), dto.getImages(),

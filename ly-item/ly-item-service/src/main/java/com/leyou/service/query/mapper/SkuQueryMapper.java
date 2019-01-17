@@ -7,7 +7,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Select;
 
 /**
- * sku查询mapper.
+ * sku查询mapper
  *
  * @author shaoyijiong
  * @date 2018/12/12

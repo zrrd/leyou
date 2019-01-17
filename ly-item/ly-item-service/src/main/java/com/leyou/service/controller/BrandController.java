@@ -50,7 +50,7 @@ public class BrandController {
   }
 
   /**
-   * 分页查询品牌.
+   * 分页查询品牌
    */
   @GetMapping("page")
   public ResponseEntity<PageResult> queryBrandByPage(BrandQueryPageReq req) {
@@ -62,7 +62,7 @@ public class BrandController {
   }
 
   /**
-   * 新增品牌.
+   * 新增品牌
    */
   @PostMapping
   public ResponseEntity<Void> saveBrand(SaveBrandReq req) {
@@ -72,7 +72,7 @@ public class BrandController {
   }
 
   /**
-   * 根据类别查询.
+   * 根据类别查询
    */
   @GetMapping("cid/{id}")
   public ResponseEntity<List<SelectBrandDto>> queryBrandByCategory(@PathVariable Long id) {

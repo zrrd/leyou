@@ -10,7 +10,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 /**
- * spu查询mapper.
+ * spu查询mapper
  *
  * @author shaoyijiong
  * @date 2018/12/12
@@ -18,7 +18,7 @@ import org.apache.ibatis.annotations.Select;
 public interface SpuQueryMapper extends BaseMapper<Spu> {
 
   /**
-   * 分页查询spu.
+   * 分页查询spu
    *
    * @param page 分页信息
    * @param key 搜索字段

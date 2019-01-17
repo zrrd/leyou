@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
- * 商品查询接口.
+ * 商品查询接口
  *
  * @author shaoyijiong
  * @date 2018/12/12

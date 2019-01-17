@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 /**
- * mybatis-plus 配置插件.
+ * mybatis-plus 配置插件
  *
  * @author shaoyijong
  * @date 2018/11/30
@@ -18,7 +18,7 @@ import org.springframework.context.annotation.Profile;
 public class MybatisPlusConfig {
 
   /**
-   * SQL执行效率插件 设置 dev test 环境开启.
+   * SQL执行效率插件 设置 dev test 环境开启
    */
   @Bean
   @Profile({"dev", "test"})
@@ -27,7 +27,7 @@ public class MybatisPlusConfig {
   }
 
   /**
-   * 分页插件.
+   * 分页插件
    */
   @Bean
   public PaginationInterceptor paginationInterceptor() {

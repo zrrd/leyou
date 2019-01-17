@@ -27,7 +27,7 @@ public class User extends Model<User> {
 
   @TableId(type = IdType.AUTO)
   private Long id;
-  private String user;
+  private String username;
   @JsonIgnore
   private String password;
   private String phone;
@@ -37,4 +37,8 @@ public class User extends Model<User> {
    */
   @JsonIgnore
   private String salt;
+
+  public static User newInstForSave(String username, String password, String phone, String salt) {
+    return new User(null, username, password, phone, new Date(), salt);
+  }
 }

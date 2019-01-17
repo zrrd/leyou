@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.leyou.service.pojo.domain.Spu;
 
 /**
- * @author shaoyijiong.
+ * @author shaoyijiong
  * @date 2018/12/12
  */
 @SuppressWarnings("unused")

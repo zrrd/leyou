@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
- * 商品类目相关查询.
+ * 商品类目相关查询
  *
  * @author shaoyijiong
  * @date 2018/11/28
@@ -26,7 +26,7 @@ public class CategoryQuery {
   }
 
   /**
-   * 通过父类目 id 找到所以子类目 id.
+   * 通过父类目 id 找到所以子类目 id
    */
   public List<CategoryQueryDto> queryCategoryByPid(Long parentId) {
     return mapper.queryCategoryByPid(parentId);
