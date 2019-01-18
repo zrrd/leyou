@@ -7,7 +7,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
 /**
- * 解决跨域请求限制问题  通过Cors的方式.
+ * 解决跨域请求限制问题  通过Cors的方式
  *
  * @author shaoyijiong
  * @date 2018/11/28

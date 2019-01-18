@@ -15,7 +15,7 @@ import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 /**
- * redis的config. ConditionalOnClass 在导入类redis相关依赖才会生效 使用fastJson的方式进行序列化
+ * redis的config ConditionalOnClass 在导入类redis相关依赖才会生效 使用fastJson的方式进行序列化
  *
  * @author shaoyijiong
  * @date 2018/7/27

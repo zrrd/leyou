@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
- * 异常拦截器.
+ * 异常拦截器
  *
  * @author shaoyijiong
  * @date 2018/12/4

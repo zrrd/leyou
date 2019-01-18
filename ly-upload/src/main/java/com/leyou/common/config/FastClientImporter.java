@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.jmx.support.RegistrationPolicy;
 
 /**
- * fastdfs客户端配置.
+ * fastdfs客户端配置
  *
  * @author shaoyijiong
  * @date 2018/12/5

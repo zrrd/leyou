@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
- * 图片上传.
+ * 图片上传
  *
  * @author shaoyijiong
  * @date 2018/12/5
@@ -34,7 +34,7 @@ public class UploadService {
   }
 
   /**
-   * 校验并且上传文件.
+   * 校验并且上传文件
    */
   public String upload(MultipartFile file) {
     //1.文件校验

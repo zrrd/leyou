@@ -1,0 +1,2 @@
+pubKeyUrl=http://47.100.48.207:8888/group1/M00/00/1A/rBNL6VxBSa-AbXPbAAAAoi_dT80562.pub
+priKeyUrl=http://47.100.48.207:8888/group1/M00/00/1A/rBNL6VxBSa-ARfBFAAACe57X3K8233.pri

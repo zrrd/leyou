@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
- * 上次图片文件.
+ * 上次图片文件
  *
  * @author shaoyijiong
  * @date 2018/12/4
