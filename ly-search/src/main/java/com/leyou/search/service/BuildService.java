@@ -1,14 +1,13 @@
 package com.leyou.search.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
+import com.leyou.common.utils.JsonUtils;
 import com.leyou.search.client.BrandClient;
 import com.leyou.search.client.CategoryClient;
 import com.leyou.search.client.GoodsClient;
@@ -18,7 +17,6 @@ import com.leyou.search.repository.GoodsRepository;
 import com.leyou.service.pojo.dto.query.SkuQueryDto;
 import com.leyou.service.pojo.dto.query.SpuDetailEditQueryDto;
 import com.leyou.service.pojo.dto.query.SpuDto;
-import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -40,7 +38,6 @@ public class BuildService {
   private final GoodsClient goodsClient;
   private final BrandClient brandClient;
   private final CategoryClient categoryClient;
-  private ObjectMapper mapper = new ObjectMapper();
   private final GoodsRepository goodsRepository;
 
   @SuppressWarnings("CheckStyle")
@@ -103,12 +100,7 @@ public class BuildService {
       priceSet.add(sku.getPrice());
       skuData.add(map);
     });
-    try {
-      return mapper.writeValueAsString(skuData);
-    } catch (JsonProcessingException e) {
-      e.printStackTrace();
-    }
-    return "";
+    return JsonUtils.serialize(skuData);
   }
 
   /**
@@ -119,16 +111,14 @@ public class BuildService {
     SpuDetailEditQueryDto spuDetail = goodsClient.querySpuDetailById(id);
     //查询规格参数  每个个体的规格参数
     String specJsonForSpu = spuDetail.getSpecifications();
-    List<Specification> maps = null;
-    try {
-      maps = mapper.readValue(specJsonForSpu, new TypeReference<List<Specification>>() {
-      });
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
+    List<Specification> maps = JsonUtils
+        .nativeRead(specJsonForSpu, new TypeReference<List<Specification>>() {
+        });
     //转换规格参数
     Map<String, Object> specMap = Maps.newHashMap();
-
+    if (maps == null) {
+      return specMap;
+    }
     final String v = "v";
     final String k = "k";
     final String options = "options";
@@ -139,7 +129,6 @@ public class BuildService {
         specMap.put((String) a.get(k), a.get(options));
       }
     };
-    assert maps != null;
     maps.stream().map(Specification::getParams).flatMap(List::stream)
         .filter(a -> (Boolean) a.get("searchable")).forEach(consumer);
     return specMap;

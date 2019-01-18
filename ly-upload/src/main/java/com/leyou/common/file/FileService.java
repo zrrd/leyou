@@ -5,7 +5,7 @@ import java.io.InputStream;
 import java.util.Map;
 
 /**
- * 文件上传接口.
+ * 文件上传接口
  *
  * @author shaoyijiong
  * @date 2018/12/7
@@ -13,7 +13,7 @@ import java.util.Map;
 public interface FileService {
 
   /**
-   * 上传文件.
+   * 上传文件
    *
    * @param file 文件
    * @return 文件服务器地址
@@ -21,7 +21,7 @@ public interface FileService {
   String upload(File file);
 
   /**
-   * 通过流上传文件.
+   * 通过流上传文件
    *
    * @param inputStream 文件流
    * @param fileSize 文件大小
@@ -31,7 +31,7 @@ public interface FileService {
   String upload(InputStream inputStream, Long fileSize, String ext);
 
   /**
-   * 上传文件并生成缩略图.
+   * 上传文件并生成缩略图
    *
    * @param file 文件
    * @return 文件地址 与 文件缩略图地址  imageUrl表示原图路径  thumbImageUrl表示缩略图路径
@@ -39,7 +39,7 @@ public interface FileService {
   Map<String, String> uploadAndCreateThumb(File file);
 
   /**
-   * 通过流上传文件.
+   * 通过流上传文件
    *
    * @param inputStream 文件流
    * @param fileSize 文件大小

@@ -23,56 +23,56 @@ import java.net.NetworkInterface;
 public class IdWorker {
 
   /**
-   * 时间起始标记点，作为基准，一般取系统的最近时间（一旦确定不能变动）.
+   * 时间起始标记点，作为基准，一般取系统的最近时间（一旦确定不能变动）
    */
   private static final long TWEPOCH = 1288834974657L;
   /**
-   * 机器标识位数.
+   * 机器标识位数
    */
   private static final long WORKER_ID_BITS = 5L;
   /**
-   * 数据中心标识位数.
+   * 数据中心标识位数
    */
   private static final long DATA_CENTER_ID_BITS = 5L;
   /**
-   * 机器ID最大值.
+   * 机器ID最大值
    */
   private static final long MAX_WORKER_ID = ~(-1L << WORKER_ID_BITS);
   /**
-   * 数据中心ID最大值.
+   * 数据中心ID最大值
    */
   private static final long MAX_DATA_CENTER_ID = ~(-1L << DATA_CENTER_ID_BITS);
   /**
-   * 毫秒内自增位.
+   * 毫秒内自增位
    */
   private static final long SEQUENCE_BITS = 12L;
   /**
-   * 机器ID偏左移12位.
+   * 机器ID偏左移12位
    */
   private static final long WORKER_ID_SHIFT = SEQUENCE_BITS;
   /**
-   * 数据中心ID左移17位.
+   * 数据中心ID左移17位
    */
   private static final long DATA_CENTER_ID_SHIFT = SEQUENCE_BITS + WORKER_ID_BITS;
   /**
-   * 时间毫秒左移22位.
+   * 时间毫秒左移22位
    */
   private static final long TIMESTAMP_LEFT_SHIFT =
       SEQUENCE_BITS + WORKER_ID_BITS + DATA_CENTER_ID_BITS;
 
   private static final long SEQUENCE_MASK = ~(-1L << SEQUENCE_BITS);
   /**
-   * 上次生产id时间戳.
+   * 上次生产id时间戳
    */
   private static long lastTimestamp = -1L;
   /**
-   * 0，并发控制.
+   * 0，并发控制
    */
   private long sequence = 0L;
 
   private final long workerId;
   /**
-   * 数据标识id部分.
+   * 数据标识id部分
    */
   private final long dataCenterId;
 
@@ -100,7 +100,7 @@ public class IdWorker {
   }
 
   /**
-   * 获取下一个ID.
+   * 获取下一个ID
    */
   public synchronized long nextId() {
     long timestamp = timeGen();
@@ -142,7 +142,7 @@ public class IdWorker {
 
   /**
    * <p>
-   * 获取 maxWorkerId.
+   * 获取 maxWorkerId
    * </p>
    */
   protected static long getMaxWorkerId(long dataCenterId) {
@@ -163,7 +163,7 @@ public class IdWorker {
 
   /**
    * <p>
-   * 数据标识id部分.
+   * 数据标识id部分
    * </p>
    */
   protected static long getDataCenterId() {

@@ -13,7 +13,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum ExceptionEnum {
   /**
-   * 错误枚举.
+   * 错误枚举
    */
   UPLOAD_MISMATCH(400, "文件上传失败,文件类型不匹配"),
   UPLOAD_IMAGE_ERROR(400, "上传失败,图片错误"),
@@ -26,11 +26,11 @@ public enum ExceptionEnum {
   ;
 
   /**
-   * 错误编码.
+   * 错误编码
    */
   private int code;
   /**
-   * 错误消息.
+   * 错误消息
    */
   private String msg;
 }

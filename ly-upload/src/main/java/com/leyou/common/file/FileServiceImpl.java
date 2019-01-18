@@ -20,7 +20,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 /**
- * 文件上传实现类.
+ * 文件上传实现类
  *
  * @author shaoyijiong
  * @date 2018/12/7

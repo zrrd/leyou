@@ -1,11 +1,11 @@
 package com.leyou.search.service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
+import com.leyou.common.utils.JsonUtils;
 import com.leyou.common.utils.NumberUtils;
 import com.leyou.search.client.BrandClient;
 import com.leyou.search.client.CategoryClient;
@@ -18,8 +18,6 @@ import com.leyou.search.repository.GoodsRepository;
 import com.leyou.service.pojo.domain.Brand;
 import com.leyou.service.pojo.domain.Category;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -63,8 +61,6 @@ public class SearchService {
   private final BrandClient brandClient;
   private final CategoryClient categoryClient;
   private final SpecClient specClient;
-
-  private ObjectMapper mapper = new ObjectMapper();
 
   /**
    * 注入
@@ -227,19 +223,16 @@ public class SearchService {
     String jsonSpec = specClient.querySpecifications(id);
     // 将规格反序列化为集合
     List<Specification> specs;
-    try {
-      specs = mapper.readValue(jsonSpec, new TypeReference<List<Specification>>() {
-      });
-    } catch (Exception e) {
-      log.error("解析规格参数json出错，json={}", jsonSpec, e);
-      return null;
-    }
-
+    specs = JsonUtils.nativeRead(jsonSpec, new TypeReference<List<Specification>>() {
+    });
     // 2、过滤出可以搜索的哪些规格参数的名称，分成数值类型、字符串类型
     // 准备集合，保存字符串规格参数名
     Set<String> strSpec = Sets.newHashSet();
     // 准备map，保存数值规格参数名及单位
     Map<String, String> numericalUnits = Maps.newHashMap();
+    if (specs == null) {
+      return Lists.newArrayList();
+    }
     // 解析规格
     for (Specification spec : specs) {
       List<Map<String, Object>> params = spec.getParams();
