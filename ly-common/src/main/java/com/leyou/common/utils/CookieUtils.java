@@ -6,7 +6,10 @@ import java.net.URLEncoder;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import lombok.Data;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.lang.NonNull;
 
 /**
  * Cookie 工具类
@@ -184,15 +187,16 @@ public final class CookieUtils {
    */
   private static String getDomainName(HttpServletRequest request) {
     String domainName;
-
-    String serverName = request.getRequestURL().toString();
+    //www.leyou.com
+    String serverName = request.getHeader("x-forwarded-server");
+    //String serverName = request.getRequestURL().toString();
     if ("".equals(serverName)) {
       domainName = "";
     } else {
       serverName = serverName.toLowerCase();
-      serverName = serverName.substring(7);
-      final int end = serverName.indexOf("/");
-      serverName = serverName.substring(0, end);
+      //serverName = serverName.substring(7);
+      //final int end = serverName.indexOf("/");
+      //serverName = serverName.substring(0, end);
       final String[] domains = serverName.split("\\.");
       int len = domains.length;
       if (len > 3) {
@@ -213,4 +217,61 @@ public final class CookieUtils {
     return domainName;
   }
 
+  public static class CookieBuilder {
+
+    private boolean isEncode;
+    private Integer maxAge = -1;
+    private HttpServletRequest request;
+    private HttpServletResponse response;
+    private boolean httpOnly;
+
+    /**
+     * 前端js代码不能操作cookies
+     */
+    public CookieBuilder httpOnly() {
+      this.httpOnly = true;
+      return this;
+    }
+
+    public CookieBuilder isEncode(Boolean isEncode) {
+      this.isEncode = isEncode;
+      return this;
+    }
+
+    public CookieBuilder maxAge(Integer maxAge) {
+      this.maxAge = maxAge;
+      return this;
+    }
+
+    public CookieBuilder request(HttpServletRequest request) {
+      this.request = request;
+      return this;
+    }
+
+    public CookieBuilder(HttpServletResponse response) {
+      this.response = response;
+    }
+
+    public void build(@NonNull String cookieName, @NonNull String cookieValue) {
+      if (isEncode) {
+        try {
+          cookieValue = URLEncoder.encode(cookieValue, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+          e.printStackTrace();
+        }
+      }
+      Cookie cookie = new Cookie(cookieName, cookieValue);
+      cookie.setMaxAge(maxAge);
+      cookie.setHttpOnly(true);
+      if (request != null) {
+        cookie.setDomain(getDomainName(request));
+      }
+      cookie.setPath("/");
+      response.addCookie(cookie);
+    }
+  }
+
+  public static CookieBuilder newBuilder(HttpServletResponse response) {
+    return new CookieBuilder(response);
+  }
 }

@@ -5,7 +5,8 @@ spring:
     name: search-service
   data:
     elasticsearch:
-      cluster-name: elasticsearch
+      #要与es.yml 中配置文件的cluster-name一致
+      cluster-name: docker-cluster
       cluster-nodes: 47.99.73.15:9300
   rabbitmq:
     host: 47.99.73.15

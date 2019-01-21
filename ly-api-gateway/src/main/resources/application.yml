@@ -26,6 +26,20 @@ zuul:
     auth-service: /auth/**
   ignored-services:
     - upload-service
+  sensitive-headers:
+  add-host-header: true
+ly:
+  jwt:
+    pubKeyUrl: http://47.100.48.207:8888/group1/M00/00/1A/rBNL6VxBSa-AbXPbAAAAoi_dT80562.pub
+    cookieName: LY_TOKEN # cookie的名称
+  filter:
+    allowPaths:
+      - /api/auth
+      - /api/search
+      - /api/user/register
+      - /api/user/check
+      - /api/user/code
+      - /api/item
 ---
 #正式环境才开熔断 方便服务器调试
 

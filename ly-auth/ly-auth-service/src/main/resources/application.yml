@@ -19,4 +19,4 @@ ly:
     priKeyUrl: http://47.100.48.207:8888/group1/M00/00/1A/rBNL6VxBSa-ARfBFAAACe57X3K8233.pri
     expire: 60
     cookieName: LY_TOKEN
-    cookieMaxAge: 30
+    cookieMaxAge: -1

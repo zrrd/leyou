@@ -17,6 +17,7 @@ public class EnumUtils {
    * 通过值获取枚举
    */
   public static <T extends IEnum> T get(Class<T> enumClass, Object o) {
+    //获取该枚举类的所有枚举
     T[] enumConstants = enumClass.getEnumConstants();
     for (T t : enumConstants) {
       if (t.getValue().equals(o)) {
