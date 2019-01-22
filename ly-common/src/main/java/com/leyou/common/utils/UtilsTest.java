@@ -6,11 +6,14 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.TimeUnit;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 /**
  * @author shaoyijiong
  * @date 2018/11/21
  */
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class UtilsTest {
 
   public static void main(String[] args) throws InterruptedException {

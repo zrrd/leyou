@@ -3,6 +3,8 @@ package com.leyou.common.utils;
 import java.lang.management.ManagementFactory;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 /**
  * <p>名称：IdWorker.java</p>
@@ -20,6 +22,7 @@ import java.net.NetworkInterface;
  * @author Polim
  */
 @SuppressWarnings("ALL")
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class IdWorker {
 
   /**

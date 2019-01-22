@@ -1,7 +1,10 @@
 package com.leyou.auth.utils;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ObjectUtils {
 
   public static String toString(Object obj) {

@@ -8,11 +8,14 @@ import java.util.Random;
 import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 /**
  * @author HuYi.Zhang
  * @date 2018-04-25 09:13
  **/
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class NumberUtils {
 
   public static boolean isInt(Double num) {

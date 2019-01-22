@@ -7,6 +7,8 @@ import com.sun.istack.internal.Nullable;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,6 +16,7 @@ import org.slf4j.LoggerFactory;
 /**
  * @author shaoyijiong
  */
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class JsonUtils {
 
   private static final ObjectMapper MAPPER = new ObjectMapper();

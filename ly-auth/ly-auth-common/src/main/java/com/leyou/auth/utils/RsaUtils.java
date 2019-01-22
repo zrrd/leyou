@@ -11,11 +11,14 @@ import java.security.PublicKey;
 import java.security.SecureRandom;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 
 /**
  * @author shaoyijiong
  */
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class RsaUtils {
 
   /**

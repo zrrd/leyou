@@ -8,12 +8,15 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.util.Date;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.time.DateUtils;
 
 
 /**
  * @author shaoyijiong
  */
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class JwtUtils {
 
   /**

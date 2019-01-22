@@ -44,7 +44,7 @@ public class LoginFilter extends ZuulFilter {
     RequestContext ctx = RequestContext.getCurrentContext();
     // 获取request
     HttpServletRequest req = ctx.getRequest();
-    // 获取路径
+    // 获取路径  getURI 获得的是相对路径/api/login   getURL 获得的是绝对路径 www.leyou.com/api/login
     String requestUri = req.getRequestURI();
     // 判断白名单
     return !isAllowPath(requestUri);
