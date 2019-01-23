@@ -22,7 +22,6 @@ import lombok.NoArgsConstructor;
  * @author Polim
  */
 @SuppressWarnings("ALL")
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class IdWorker {
 
   /**

@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
@@ -18,6 +19,7 @@ import lombok.Setter;
 @Setter(AccessLevel.PRIVATE)
 @AllArgsConstructor
 @TableName("tb_spu_detail")
+@NoArgsConstructor
 public class SpuDetail extends Model<SpuDetail> {
 
   @TableId
