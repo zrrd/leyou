@@ -141,7 +141,7 @@
               <div class="items">
                 <ul>
                   <li v-for="(image, i) in images" :key="i">
-                    <img :src="image" :bimg="image" onmousemove="preview(this)" />
+                    <img :src="image" :bimg="image" onmousemove="preview(this)"/>
                   </li>
                 </ul>
               </div>
@@ -213,16 +213,16 @@
                 <div class="control-group">
                   <div class="controls">
                     <input autocomplete="off" type="text" disabled value="1" minnum="1"
-                           class="itxt"/>
-                    <a href="javascript:void(0)" class="increment plus">+</a>
-                    <a href="javascript:void(0)" class="increment mins">-</a>
+                           v-model="num" class="itxt"/>
+                    <a href="javascript:void(0)" class="increment plus" @click="increment">+</a>
+                    <a href="javascript:void(0)" class="increment mins" @click="decrement">-</a>
                   </div>
                 </div>
               </div>
               <div class="fl">
                 <ul class="btn-choose unstyled">
                   <li>
-                    <a href="success-cart.html" target="_blank"
+                    <a href="javascript:void(0)" target="_blank" @click="addCart()"
                        class="sui-btn  btn-danger addshopcar">加入购物车</a>
                   </li>
                 </ul>
@@ -463,10 +463,10 @@
                       </div>
                     </dl>
                   </div>
-                <div class="package-list">
-                  <h3>包装清单</h3>
-                  <p th:text="${spuDetail.packingList}"></p>
-                </div>
+                  <div class="package-list">
+                    <h3>包装清单</h3>
+                    <p th:text="${spuDetail.packingList}"></p>
+                  </div>
                 </div>
               </div>
               <div id="three" class="tab-pane">
@@ -607,7 +607,7 @@
       </div>
     </div>
   </div>
- </div>
+</div>
 <script src="/js/vue/vue.js"></script>
 <script src="/js/axios.min.js"></script>
 <script src="/js/common.js"></script>
@@ -616,81 +616,121 @@
 
 </script>
 <script th:inline="javascript">
-  var itemVm = new Vue({
-    el: "#itemApp",
-    data: {
-      ly,
-      skus: [],
-      paramMap: [],
-      specialSpec: {},
-      spu: {},
-      spuDetail: {},
-      specIndex: []
-    },
-    methods: {
-      changeSku(i, j) {
-        Vue.set(this.specIndex, i, j);
-      }
-    },
-    computed: {
-      sku() {
-        const index = Object.values(this.specIndex).join("_");
-        return this.skus.find(s => s.indexes == index);
-      },
-      images() {
-        return this.sku.images ? this.sku.images.split(",") : [''];
-      },
-      groups(){
-        const ownSpec = JSON.parse(this.sku.ownSpec);
-        const groups = this.paramMap;
-        groups.forEach(group=>{
-          group.params.forEach(param=>{
-            if (!param.global) {
-              param.v = ownSpec[param.k];
-            } else {
-              param.v = param.v || '其他';
-            }
-          })
-        })
-        return groups;
-      }
+    var itemVm = new Vue({
+        el: "#itemApp",
+        data: {
+            ly,
+            skus: [],
+            paramMap: [],
+            specialSpec: {},
+            spu: {},
+            spuDetail: {},
+            specIndex: [],
+            num: 1
+        },
+        methods: {
+            changeSku(i, j) {
+                Vue.set(this.specIndex, i, j);
+            },
+            increment() {
+                this.num++;
+            },
+            decrement() {
+                if (this.num > 1) {
+                    this.num--;
+                }
+            },
+            addCart() {
+                ly.verifyUser().then(res => {
+                    // 已登录发送信息到后台，保存到redis中
 
-    },
-    components: {
-      lyTop: () => import('/js/pages/top.js')
-    },
-    created() {
-      // sku集合
-      const skus = /*[[${skus}]]*/ [];
-      const spu = /*[[${spu}]]*/ {};
-      const spuDetail = /*[[${spuDetail}]]*/ {};
-      const paramMap = JSON.parse(spuDetail.specifications);
-      const specialSpec = JSON.parse(spuDetail.specTemplate);
-      this.skus = skus;
-      this.spu = spu;
-      this.spuDetail = spuDetail;
-      this.paramMap = paramMap;
-      this.specialSpec = specialSpec;
-      this.specIndex = this.skus[0].indexes.toString().split("_").map(Number);
-    }
-  });
+                }).catch(() => {
+                    // 未登录保存在浏览器本地的localStorage中
+                    // 1、查询本地购物车
+                    let carts = ly.store.get("carts") || [];
+                    let cart = carts.find(c => c.skuId === this.sku.id);
+                    // 2、判断是否存在
+                    if (cart) {
+                        // 3、存在更新数量
+                        cart.num += this.num;
+                    } else {
+                        // 4、不存在，新增
+                        cart = {
+                            skuId: this.sku.id,
+                            title: this.sku.title,
+                            price: this.sku.price,
+                            image: this.sku.images,
+                            num: this.num,
+                            ownSpec: JSON.parse(this.sku.ownSpec)
+                        }
+                        carts.push(cart);
+                    }
+                    // 把carts写回localstorage
+                    ly.store.set("carts", carts);
+                    // 跳转
+                    window.location.href = "http://www.leyou.com/cart.html";
+                });
+            }
+        },
+        computed: {
+            sku() {
+                const index = Object.values(this.specIndex).join("_");
+                return this.skus.find(s => s.indexes == index);
+            },
+            images() {
+                return this.sku.images ? this.sku.images.split(",") : [''];
+            },
+            groups() {
+                const ownSpec = JSON.parse(this.sku.ownSpec);
+                const groups = this.paramMap;
+                groups.forEach(group => {
+                    group.params.forEach(param => {
+                        if (!param.global) {
+                            param.v = ownSpec[param.k];
+                        } else {
+                            param.v = param.v || '其他';
+                        }
+                    })
+                })
+                return groups;
+            }
+
+        },
+        components: {
+            lyTop: () => import('/js/pages/top.js')
+        },
+        created() {
+            // sku集合
+            const skus = /*[[${skus}]]*/ [];
+            const spu = /*[[${spu}]]*/ {};
+            const spuDetail = /*[[${spuDetail}]]*/ {};
+            const paramMap = JSON.parse(spuDetail.specifications);
+            const specialSpec = JSON.parse(spuDetail.specTemplate);
+            this.skus = skus;
+            this.spu = spu;
+            this.spuDetail = spuDetail;
+            this.paramMap = paramMap;
+            this.specialSpec = specialSpec;
+            this.specIndex = this.skus[0].indexes.toString().split("_").map(Number);
+        }
+    });
 </script>
 
 <script type="text/javascript" src="/js/plugins/jquery/jquery.min.js"></script>
 <script type="text/javascript">
-  $(function () {
-    $("#service").hover(function () {
-      $(".service").show();
-    }, function () {
-      $(".service").hide();
-    });
-    $("#shopcar").hover(function () {
-      $("#shopcarlist").show();
-    }, function () {
-      $("#shopcarlist").hide();
-    });
+    $(function () {
+        $("#service").hover(function () {
+            $(".service").show();
+        }, function () {
+            $(".service").hide();
+        });
+        $("#shopcar").hover(function () {
+            $("#shopcarlist").show();
+        }, function () {
+            $("#shopcarlist").hide();
+        });
 
-  })
+    })
 </script>
 <script type="text/javascript" src="/js/model/cartModel.js"></script>
 <script type="text/javascript" src="/js/plugins/jquery.easing/jquery.easing.min.js"></script>

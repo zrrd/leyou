@@ -25,7 +25,7 @@ eureka:
     lease-expiration-duration-in-seconds: 10
 mybatis-plus:
   mapper-locations: classpath*:mapper/**/*Mapper.xml
-  type-enums-package: com.leyou.service.pojo.enums
+  #type-enums-package: com.leyou.service.pojo.enums
   configuration:
     map-underscore-to-camel-case: true
 ly:

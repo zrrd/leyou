@@ -1,6 +1,7 @@
 package com.leyou.service.api;
 
 import com.leyou.common.base.response.PageResult;
+import com.leyou.service.pojo.domain.Sku;
 import com.leyou.service.pojo.dto.query.SkuQueryDto;
 import com.leyou.service.pojo.dto.query.SpuDetailEditQueryDto;
 import com.leyou.service.pojo.dto.query.SpuDto;
@@ -64,5 +65,12 @@ public interface GoodsApi {
   @RequestMapping(value = "spu/{id}", method = RequestMethod.GET)
   SpuDto querySpuById(@PathVariable("id") Long id);
 
-
+  /**
+   * 根据id查询sku
+   *
+   * @param id skuId
+   * @return sku
+   */
+  @RequestMapping(value = "sku/{id}", method = RequestMethod.GET)
+  Sku querySkuById(@PathVariable("id") Long id);
 }

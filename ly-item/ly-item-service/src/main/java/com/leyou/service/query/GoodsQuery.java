@@ -1,8 +1,10 @@
 package com.leyou.service.query;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.base.Strings;
+import com.leyou.service.pojo.domain.Sku;
 import com.leyou.service.pojo.dto.query.SkuQueryDto;
 import com.leyou.service.pojo.dto.query.SpuDetailEditQueryDto;
 import com.leyou.service.pojo.dto.query.SpuDto;
@@ -53,5 +55,9 @@ public class GoodsQuery {
 
   public SpuDto querySpuById(Long id) {
     return spuMapper.querySpuById(id);
+  }
+
+  public Sku querySkuById(Long id) {
+    return skuMapper.selectById(id);
   }
 }

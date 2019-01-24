@@ -104,6 +104,9 @@ public class SearchService {
     // 执行查询获取结果集
     AggregatedPage<Goods> goods = (AggregatedPage<Goods>) goodsRepository
         .search(queryBuilder.build());
+    if (goods.getTotalElements() == 0) {
+      return null;
+    }
 
     // 获取聚合结果集
     // 商品分类的聚合结果

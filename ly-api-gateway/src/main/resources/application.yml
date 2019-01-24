@@ -24,6 +24,7 @@ zuul:
     search-service: /search/**
     user-service: /user/**
     auth-service: /auth/**
+    cart-service: /cart/**
   ignored-services:
     - upload-service
   sensitive-headers:

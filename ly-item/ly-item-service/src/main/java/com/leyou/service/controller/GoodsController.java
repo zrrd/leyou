@@ -12,6 +12,7 @@ import com.leyou.service.application.listener.Publisher;
 import com.leyou.service.mvc.req.SaveGoodsReq;
 import com.leyou.service.mvc.req.SaveGoodsReq.SkusBean;
 import com.leyou.service.mvc.req.SpuQueryPageReq;
+import com.leyou.service.pojo.domain.Sku;
 import com.leyou.service.pojo.dto.application.SaveSkuDto;
 import com.leyou.service.pojo.dto.application.SaveSpuDetailDto;
 import com.leyou.service.pojo.dto.application.SaveSpuDto;
@@ -190,5 +191,17 @@ public class GoodsController {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
     return ResponseEntity.ok(spu);
+  }
+
+  /**
+   * 根据id查询sku
+   */
+  @GetMapping("sku/{id}")
+  public ResponseEntity<Sku> querySkuById(@PathVariable("id") Long id) {
+    Sku sku = goodsQuery.querySkuById(id);
+    if (sku == null) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
+    return ResponseEntity.ok(sku);
   }
 }

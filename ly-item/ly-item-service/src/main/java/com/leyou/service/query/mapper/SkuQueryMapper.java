@@ -1,6 +1,7 @@
 package com.leyou.service.query.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.leyou.service.pojo.domain.Sku;
 import com.leyou.service.pojo.domain.Spu;
 import com.leyou.service.pojo.dto.query.SkuQueryDto;
 import java.util.List;
@@ -12,7 +13,7 @@ import org.apache.ibatis.annotations.Select;
  * @author shaoyijiong
  * @date 2018/12/12
  */
-public interface SkuQueryMapper extends BaseMapper<Spu> {
+public interface SkuQueryMapper extends BaseMapper<Sku> {
 
   /**
    * 根据spu查询sku列表
